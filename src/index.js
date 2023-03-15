@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
-import { AppLayout } from "@cloudscape-design/components";
+import { createRoot, createPortal } from 'react-dom';
+import { AppLayout, ContentLayout, Header } from "@cloudscape-design/components";
 import { Amplify } from 'aws-amplify'
 
 // components
+import { NavigationBar } from './components/Navigation';
 import { Messages } from './components/Message';
 
 // amplify configuration
@@ -12,17 +13,24 @@ Amplify.configure(config)
 
 function Channel() {
   return (
-    <Messages channelId='random' />
+    <ContentLayout
+      header={<Header variant="h1" />}
+    >
+      <Messages channelId='random' />
+    </ContentLayout>
   );
 }
 
 function App() {
   const appLayout = useRef();
   return (
-    <AppLayout
-      ref={appLayout}
-      content={<Channel />}
-    />
+    <>
+      <NavigationBar />
+      <AppLayout
+        ref={appLayout}
+        content={<Channel />}
+      />
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 // ui
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Button, Form, Modal, Textarea,
   Box, Container, Grid, Header, SpaceBetween
@@ -194,7 +194,7 @@ const MessageForm = ({
   );
 }
 
-function Messages(channel) {
+export function Messages(channel) {
   const [messages, setMessages] = useState([]);
   const [activeMessage, setActiveMessage] = useState(null);
 
@@ -258,5 +258,3 @@ function Messages(channel) {
     </Grid>
   );
 }
-
-export { Messages };
