@@ -1,5 +1,41 @@
-import * as React from "react";
-import { TopNavigation } from "@cloudscape-design/components";
+import React, { useState } from "react";
+import { Badge, TopNavigation, SideNavigation } from "@cloudscape-design/components";
+
+export function Workspace () {
+  const [activeHref, setActiveHref] = useState("#/page1");
+
+  return (
+    <SideNavigation
+      activeHref={activeHref}
+      header={{ href: "#/", text: "Workspace" }}
+      onFollow={event => {
+        if (!event.detail.external) {
+          event.preventDefault();
+          setActiveHref(event.detail.href);
+        }
+      }}
+      items={[
+        { type: "link", text: "Page 1", href: "#/page1" },
+        { type: "link", text: "Page 2", href: "#/page2" },
+        { type: "link", text: "Page 3", href: "#/page3" },
+        { type: "link", text: "Page 4", href: "#/page4" },
+        { type: "divider" },
+        {
+          type: "link",
+          text: "Notifications",
+          href: "#/notifications",
+          info: <Badge color="red">23</Badge>
+        },
+        {
+          type: "link",
+          text: "Documentation",
+          href: "https://example.com",
+          external: true
+        }
+      ]}
+    />
+  );
+}
 
 export function NavigationBar () {
   return (
