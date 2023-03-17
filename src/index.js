@@ -28,6 +28,7 @@ function App() {
       <NavigationBar />
       <AppLayout
         ref={appLayout}
+        headerSelector="#header"
         content={<Channel />}
       />
     </>
