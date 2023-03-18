@@ -1,34 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { createRoot, createPortal } from 'react-dom';
-import { AppLayout, ContentLayout, Header } from "@cloudscape-design/components";
-import { Amplify } from 'aws-amplify'
+import React, { useRef } from "react";
+import { createRoot, createPortal } from "react-dom";
+import { Amplify } from "aws-amplify";
+import { AppLayout } from "@cloudscape-design/components";
 
 // components
-import { NavigationBar } from './components/Navigation';
-import { Messages } from './components/Message';
+import { NavigationBar, Workspace } from "./components/Navigation";
+import { Channels } from "./components/Channel";
 
 // amplify configuration
-import  config  from './aws-exports'
-Amplify.configure(config)
-
-function Channel() {
-  return (
-    <ContentLayout
-      header={<Header variant="h1" />}
-    >
-      <Messages channelId='random' />
-    </ContentLayout>
-  );
-}
+import  config  from "./aws-exports";
+Amplify.configure(config);
 
 function App() {
   const appLayout = useRef();
   return (
     <>
-      <NavigationBar />
+      <div id="h" style={{ position: 'sticky', top: 0, zIndex: 1002 }}>
+        <NavigationBar />
+      </div>
       <AppLayout
         ref={appLayout}
-        content={<Channel />}
+        headerSelector="#h"
+        navigation={<Workspace />}
+        content={<Channels />}
       />
     </>
   );
