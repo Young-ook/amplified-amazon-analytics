@@ -63,7 +63,7 @@ export function Messages(channel) {
 
   return (
     <>
-      <Box float='center' variant='h3'>Channel name</Box>
+      <Box float='center' variant='h3'>{channel.channelId}</Box>
       <Box float='center'>
         <SpaceBetween size="xs">
         {
