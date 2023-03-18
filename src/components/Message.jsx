@@ -190,29 +190,29 @@ const MessageForm = ({
   }
 
   return (
-      <form onSubmit={submitHandler}>
-      <Form>
-        <Box>
-          <SpaceBetween direction="horizontal" size="xs">
-            <Button formAction="none" iconName="undo" variant="icon" onClick={cancelHandler} />
-            <Button formAction="submit" iconName="upload" variant="icon" />
-          </SpaceBetween>
-        </Box>
-        <Textarea
-          onChange={({detail}) => setPost(detail.value)}
-          value={post}
-          rows={post.split(/\r\n|\r|\n/).length}
-        />
-        <Modal
-          onDismiss={() => setAlertVisible(false)}
-          visible={alertVisible}
-          closeAriaLabel="Close modal"
-          size="small"
-        >
-          Please make sure to enter a message
-        </Modal>
-      </Form>
-      </form>
+    <form onSubmit={submitHandler}>
+    <Form>
+      <Box>
+        <SpaceBetween direction="horizontal" size="xs">
+          <Button formAction="none" iconName="undo" variant="icon" onClick={cancelHandler} />
+          <Button formAction="submit" iconName="upload" variant="icon" />
+        </SpaceBetween>
+      </Box>
+      <Textarea
+        onChange={({detail}) => setPost(detail.value)}
+        value={post}
+        rows={post.split(/\r\n|\r|\n/).length}
+      />
+      <Modal
+        onDismiss={() => setAlertVisible(false)}
+        visible={alertVisible}
+        closeAriaLabel="Close modal"
+        size="small"
+      >
+        Please make sure to enter a message
+      </Modal>
+    </Form>
+    </form>
   );
 }
 
