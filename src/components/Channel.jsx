@@ -1,16 +1,18 @@
+// ui
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  ContentLayout,
   Container,
+  ContentLayout,
   Grid,
-  Header
+  Header,
+  Link
 } from "@cloudscape-design/components";
 
 // components
 import { Messages } from "./Message";
 
-//api
+//apis
 import { API, graphqlOperation } from 'aws-amplify'
 import { listChannels } from '../graphql/queries'
 import { createChannel, updateChannel, deleteChannel } from '../graphql/mutations'
@@ -18,6 +20,7 @@ import { onCreateChannel, onUpdateChannel, onDeleteChannel } from '../graphql/su
 
 export function Channels() {
   const [channels, channelsLoading] = useAsyncData(() => new DataProvider().fetchData());
+  const [activeChannel, setActiveChannel] = useState(null);
 
   return (
     <ContentLayout
@@ -27,10 +30,14 @@ export function Channels() {
         <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
           <Box>
           {
-            channels.length > 0 ? channels.map(channel => <Box key={channel.id}>{channel.name}</Box>) : <Box />
+            channels.map(channel =>
+              <Box key={channel.id}>
+                <Link onFollow={() => setActiveChannel(channel.id)}>{channel.name}</Link>
+              </Box>
+            )
           }
           </Box>
-          <Messages channelId='random' />
+          <Messages channelId={activeChannel} />
         </Grid>
       </Container>
     </ContentLayout>
