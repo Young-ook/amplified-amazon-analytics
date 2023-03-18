@@ -67,7 +67,7 @@ export function Messages(channel) {
       <Box float='center'>
         <SpaceBetween size="xs">
         {
-          messages.length > 0 ? (messages.sort((a, b) => b.createdAt.localeCompare(a.updatedAt)).map(message =>
+          messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.updatedAt)).map(message =>
             <Message
               key={ message.id }
               message={message}
