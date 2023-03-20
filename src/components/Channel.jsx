@@ -19,7 +19,7 @@ import { createChannel, updateChannel, deleteChannel } from '../graphql/mutation
 import { onCreateChannel, onUpdateChannel, onDeleteChannel } from '../graphql/subscriptions';
 
 export function Channels() {
-  const [channels, channelsLoading] = useAsyncData(() => new DataProvider().fetchData());
+  const [channels, channelsLoading] = useAsyncData(() => fetchChannelApi());
   const [activeChannel, setActiveChannel] = useState(null);
 
   return (
@@ -30,14 +30,18 @@ export function Channels() {
         <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
           <Box>
           {
+            //channels.length > 0 && !activeChannel ? setActiveChannel({ id: channel.id, name: channel.name})
             channels.map(channel =>
-              <Box key={channel.id}>
-                <Link onFollow={() => setActiveChannel(channel.id)}>{channel.name}</Link>
-              </Box>
+              <Channel
+                key={channel.id}
+                channel={channel}
+                activeChannel={activeChannel}
+                setActiveChannel={setActiveChannel}
+              />
             )
           }
           </Box>
-          <Messages channelId={activeChannel} />
+          <Messages channelId={activeChannel} channelName={activeChannel} />
         </Grid>
       </Container>
     </ContentLayout>
@@ -64,22 +68,37 @@ function useAsyncData(loadChannels) {
   return [items, loading];
 }
 
-class DataProvider {
-  fetchData() {
-    try {
-      return API.graphql(graphqlOperation(listChannels)).then(
-        result => {
-          //if (result.ok) {}
-          return result.data.listChannels.items;
-      });
-    }
-    catch (e) {
-      console.log(e);
-    }
+const Channel = ({
+  channel,
+  activeChannel,
+  setActiveChannel,
+}) => {
+  const switchChannelHandler = () => {
+    //setActiveChannel({ id: channel.id, name: channel.name})
+    setActiveChannel(channel.id)
   }
+
+  return (
+    <Box>
+      <Link onFollow={switchChannelHandler}>{channel.name}</Link>
+    </Box>
+  );
 }
 
 // apis
+function fetchChannelApi() {
+  try {
+    return API.graphql(graphqlOperation(listChannels)).then(
+      result => {
+        return result.data.listChannels.items;
+    });
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
+
+
 function createChannelApi(name, icon='', description='') {
   try {
     API.graphql(graphqlOperation(createChannel, {
