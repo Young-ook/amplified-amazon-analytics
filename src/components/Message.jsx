@@ -69,7 +69,7 @@ export function Messages(channel) {
         {
           messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.updatedAt)).map(message =>
             <Message
-              key={ message.id }
+              key={message.id}
               message={message}
               activeMessage={activeMessage}
               setActiveMessage={setActiveMessage}
