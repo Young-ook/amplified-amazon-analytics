@@ -19,7 +19,7 @@ import { createChannel, updateChannel, deleteChannel } from '../graphql/mutation
 import { onCreateChannel, onUpdateChannel, onDeleteChannel } from '../graphql/subscriptions';
 
 export function Channels() {
-  const [channels, channelsLoading] = useAsyncData(() => fetchChannelApi());
+  const [channels] = useAsyncData(() => fetchChannelApi());
   const [activeChannel, setActiveChannel] = useState(null);
 
   return (
@@ -30,7 +30,6 @@ export function Channels() {
         <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
           <Box>
           {
-            //channels.length > 0 && !activeChannel ? setActiveChannel({ id: channel.id, name: channel.name})
             channels.map(channel =>
               <Channel
                 key={channel.id}
@@ -45,6 +44,24 @@ export function Channels() {
         </Grid>
       </Container>
     </ContentLayout>
+  );
+}
+
+const Channel = ({
+  channel,
+  activeChannel,
+  setActiveChannel,
+}) => {
+  if (!activeChannel) { setActiveChannel(channel.id) }
+  const switchChannelHandler = () => {
+    //setActiveChannel({ id: channel.id, name: channel.name})
+    setActiveChannel(channel.id)
+  }
+
+  return (
+    <Box>
+      <Link onFollow={switchChannelHandler}>{channel.name}</Link>
+    </Box>
   );
 }
 
@@ -66,23 +83,6 @@ function useAsyncData(loadChannels) {
   }, [loadChannels]);
 
   return [items, loading];
-}
-
-const Channel = ({
-  channel,
-  activeChannel,
-  setActiveChannel,
-}) => {
-  const switchChannelHandler = () => {
-    //setActiveChannel({ id: channel.id, name: channel.name})
-    setActiveChannel(channel.id)
-  }
-
-  return (
-    <Box>
-      <Link onFollow={switchChannelHandler}>{channel.name}</Link>
-    </Box>
-  );
 }
 
 // apis
