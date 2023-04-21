@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Form,
+  Header,
   Modal,
   SpaceBetween,
   Textarea
@@ -67,7 +68,7 @@ export function Messages(channel) {
       <Box float='center'>
         <SpaceBetween size="xs">
         {
-          messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.updatedAt)).map(message =>
+          messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.createdAt)).map(message =>
             <Message
               key={message.id}
               message={message}
@@ -126,15 +127,21 @@ const Message = ({
       activeMessage={activeMessage}
       setActiveMessage={setActiveMessage}
      /> : <>
-    <Box variant="h4">User name</Box>
-    <Box color="text-body-secondary">{moment(message.updatedAt).fromNow()}</Box>
-    <Box>
-      <SpaceBetween direction="horizontal" size="xxs">
-        <Button iconName="contact" variant="icon" />
-        <Button iconName="edit" variant="icon" onClick={() => setActiveMessage({ id: message.id, type: "edit"})} />
-        <Button iconName="remove" variant="icon" onClick={() => setConfirmVisible(true)} />
-      </SpaceBetween>
-    </Box>
+    <Header
+      variant="h5"
+      actions={
+        <Box>
+          <SpaceBetween direction="horizontal" size="xxs">
+            <Button iconName="contact" variant="icon" />
+            <Button iconName="edit" variant="icon" onClick={() => setActiveMessage({ id: message.id, type: "edit"})} />
+            <Button iconName="remove" variant="icon" onClick={() => setConfirmVisible(true)} />
+          </SpaceBetween>
+        </Box>
+      }
+    >
+      <Box variant="h4">User name</Box>
+      <Box color="text-body-secondary">{moment(message.createdAt).fromNow()}</Box>
+    </Header>
     <Box>
       <NewLineToBr>{message.content}</NewLineToBr>
     </Box>
