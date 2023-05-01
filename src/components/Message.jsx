@@ -176,8 +176,7 @@ const MessageForm = ({
 }) => {
   const [post, setPost] = useState(initText);
 
-  const submitHandler = (event) => {
-    event.preventDefault();
+  const sendMessage = () => {
     if (post.replace(/\s/g,'').length > 0) {
       if (activeMessage && activeMessage.type === "edit") {
         editMessageApi(messageId, messageVersion, post);
@@ -189,9 +188,19 @@ const MessageForm = ({
       }
     }
   };
+  const keyUpHandler = (e) => {
+    if (e.detail.keyCode === 13 && !e.detail.shiftKey) {
+      sendMessage();
+      setPost("");
+    }
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    sendMessage();
+  };
   const cancelHandler = () => {
     activeMessage && activeMessage.type === "edit" ? setActiveMessage(null) : setPost("")
-  }
+  };
 
   return (
     <form onSubmit={submitHandler}>
@@ -201,6 +210,7 @@ const MessageForm = ({
       >
         <Textarea
           onChange={({detail}) => setPost(detail.value)}
+          onKeyUp={keyUpHandler}
           value={post}
           rows={post.split(/\r\n|\r|\n/).length}
         />
