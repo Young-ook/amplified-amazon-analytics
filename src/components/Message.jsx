@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Form,
+  Grid,
   Header,
   Modal,
   SpaceBetween,
@@ -174,10 +175,8 @@ const MessageForm = ({
   setActiveMessage,
 }) => {
   const [post, setPost] = useState(initText);
-  const [alertVisible, setAlertVisible] = useState(false);
 
-  const submitHandler = (event) => {
-    event.preventDefault();
+  const sendMessage = () => {
     if (post.replace(/\s/g,'').length > 0) {
       if (activeMessage && activeMessage.type === "edit") {
         editMessageApi(messageId, messageVersion, post);
@@ -188,36 +187,40 @@ const MessageForm = ({
         setPost("");
       }
     }
-    else {
-      setAlertVisible(true);
+  };
+  const keyUpHandler = (e) => {
+    if (e.detail.keyCode === 13 && !e.detail.shiftKey) {
+      sendMessage();
+      setPost("");
     }
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    sendMessage();
   };
   const cancelHandler = () => {
     activeMessage && activeMessage.type === "edit" ? setActiveMessage(null) : setPost("")
-  }
+  };
 
   return (
     <form onSubmit={submitHandler}>
     <Form>
-      <Box>
-        <SpaceBetween direction="horizontal" size="xs">
-          <Button formAction="none" iconName="undo" variant="icon" onClick={cancelHandler} />
-          <Button formAction="submit" iconName="upload" variant="icon" />
-        </SpaceBetween>
-      </Box>
-      <Textarea
-        onChange={({detail}) => setPost(detail.value)}
-        value={post}
-        rows={post.split(/\r\n|\r|\n/).length}
-      />
-      <Modal
-        onDismiss={() => setAlertVisible(false)}
-        visible={alertVisible}
-        closeAriaLabel="Close modal"
-        size="small"
+      <Grid
+        gridDefinition={[{ colspan: 10 }, { colspan: 2 }]}
       >
-        Please make sure to enter a message
-      </Modal>
+        <Textarea
+          onChange={({detail}) => setPost(detail.value)}
+          onKeyUp={keyUpHandler}
+          value={post}
+          rows={post.split(/\r\n|\r|\n/).length}
+        />
+        <Box>
+          <SpaceBetween direction="horizontal" size="xs">
+            <Button formAction="none" iconName="undo" variant="icon" onClick={cancelHandler} />
+            <Button formAction="submit" iconName="upload" variant="icon" />
+          </SpaceBetween>
+        </Box>
+      </Grid>
     </Form>
     </form>
   );
