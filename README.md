@@ -18,6 +18,9 @@ amplify env list
 amplify env add dev
 amplify env checkout dev
 
+# add authentication
+amplify add auth
+
 # create data stores and api server
 amplify add api
  - blank
