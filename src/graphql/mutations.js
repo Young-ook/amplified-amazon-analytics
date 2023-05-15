@@ -18,11 +18,13 @@ export const createChannel = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -43,11 +45,13 @@ export const updateChannel = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -68,11 +72,13 @@ export const deleteChannel = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -87,6 +93,7 @@ export const createMessage = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -101,6 +108,7 @@ export const updateMessage = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -115,6 +123,7 @@ export const deleteMessage = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      owner
     }
   }
 `;

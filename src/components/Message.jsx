@@ -140,7 +140,7 @@ const Message = ({
         </Box>
       }
     >
-      <Box variant="h4">User name</Box>
+      <Box variant="h4">{message.owner}</Box>
       <Box color="text-body-secondary">{moment(message.createdAt).fromNow()}</Box>
     </Header>
     <Box>
@@ -226,7 +226,7 @@ const MessageForm = ({
   );
 }
 
-// apis
+// graphql apis
 function createMessageApi(post, channelId) {
   try {
     API.graphql(graphqlOperation(createMessage, {

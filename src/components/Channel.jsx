@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
+  Button,
   Container,
   ContentLayout,
   Grid,
@@ -29,6 +30,7 @@ export function Channels() {
       <Container>
         <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
           <Box>
+            <Button iconName="add-plus" variant="icon" onClick={() => API.graphql(graphqlOperation(createChannelApi('hello')))} />
           {
             channels.map(channel =>
               <Channel
@@ -85,7 +87,7 @@ function useAsyncData(loadChannels) {
   return [items, loading];
 }
 
-// apis
+// graphql apis
 function fetchChannelApi() {
   try {
     return API.graphql(graphqlOperation(listChannels)).then(
