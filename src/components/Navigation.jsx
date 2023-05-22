@@ -1,5 +1,20 @@
 import React, { useState } from "react";
-import { Badge, TopNavigation, SideNavigation } from "@cloudscape-design/components";
+import { Auth } from 'aws-amplify';
+import {
+  Badge,
+  SideNavigation,
+  TopNavigation
+} from "@cloudscape-design/components";
+
+async function signOut() {
+  try {
+    await Auth.signOut();
+    console.log('signed out');
+  } catch (error) {
+    console.log('error signing out: ', error);
+  }
+}
+
 
 export function Workspace () {
   const [activeHref, setActiveHref] = useState("#/page1");
@@ -114,7 +129,8 @@ export function NavigationBar () {
               ]
             },
             { id: "signout", text: "Sign out" }
-          ]
+          ],
+          onItemClick: () => signOut()
         }
       ]}
       i18nStrings={{
