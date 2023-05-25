@@ -132,7 +132,7 @@ function useAsyncData(loadChannels) {
   return [items, loading];
 }
 
-// apis
+// graphql apis
 function fetchChannelApi() {
   try {
     return API.graphql(graphqlOperation(listChannels)).then(

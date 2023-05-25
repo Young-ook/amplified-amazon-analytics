@@ -15,11 +15,13 @@ export const getChannel = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -40,6 +42,7 @@ export const listChannels = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -53,6 +56,7 @@ export const getMessage = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -69,6 +73,7 @@ export const listMessages = /* GraphQL */ `
         content
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
@@ -95,6 +100,7 @@ export const messagesByChannelId = /* GraphQL */ `
         content
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }

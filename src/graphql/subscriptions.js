@@ -2,8 +2,11 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateChannel = /* GraphQL */ `
-  subscription OnCreateChannel($filter: ModelSubscriptionChannelFilterInput) {
-    onCreateChannel(filter: $filter) {
+  subscription OnCreateChannel(
+    $filter: ModelSubscriptionChannelFilterInput
+    $owner: String
+  ) {
+    onCreateChannel(filter: $filter, owner: $owner) {
       id
       name
       description
@@ -15,17 +18,22 @@ export const onCreateChannel = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdateChannel = /* GraphQL */ `
-  subscription OnUpdateChannel($filter: ModelSubscriptionChannelFilterInput) {
-    onUpdateChannel(filter: $filter) {
+  subscription OnUpdateChannel(
+    $filter: ModelSubscriptionChannelFilterInput
+    $owner: String
+  ) {
+    onUpdateChannel(filter: $filter, owner: $owner) {
       id
       name
       description
@@ -37,17 +45,22 @@ export const onUpdateChannel = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeleteChannel = /* GraphQL */ `
-  subscription OnDeleteChannel($filter: ModelSubscriptionChannelFilterInput) {
-    onDeleteChannel(filter: $filter) {
+  subscription OnDeleteChannel(
+    $filter: ModelSubscriptionChannelFilterInput
+    $owner: String
+  ) {
+    onDeleteChannel(filter: $filter, owner: $owner) {
       id
       name
       description
@@ -59,44 +72,58 @@ export const onDeleteChannel = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onCreateMessage = /* GraphQL */ `
-  subscription OnCreateMessage($filter: ModelSubscriptionMessageFilterInput) {
-    onCreateMessage(filter: $filter) {
+  subscription OnCreateMessage(
+    $filter: ModelSubscriptionMessageFilterInput
+    $owner: String
+  ) {
+    onCreateMessage(filter: $filter, owner: $owner) {
       id
       channelId
       content
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdateMessage = /* GraphQL */ `
-  subscription OnUpdateMessage($filter: ModelSubscriptionMessageFilterInput) {
-    onUpdateMessage(filter: $filter) {
+  subscription OnUpdateMessage(
+    $filter: ModelSubscriptionMessageFilterInput
+    $owner: String
+  ) {
+    onUpdateMessage(filter: $filter, owner: $owner) {
       id
       channelId
       content
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeleteMessage = /* GraphQL */ `
-  subscription OnDeleteMessage($filter: ModelSubscriptionMessageFilterInput) {
-    onDeleteMessage(filter: $filter) {
+  subscription OnDeleteMessage(
+    $filter: ModelSubscriptionMessageFilterInput
+    $owner: String
+  ) {
+    onDeleteMessage(filter: $filter, owner: $owner) {
       id
       channelId
       content
       createdAt
       updatedAt
+      owner
     }
   }
 `;
