@@ -2,11 +2,15 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
+  Button,
   Container,
   ContentLayout,
+  Form,
   Grid,
   Header,
-  Link
+  Link,
+  SpaceBetween,
+  Textarea
 } from "@cloudscape-design/components";
 
 // components
@@ -29,6 +33,7 @@ export function Channels() {
       <Container>
         <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
           <Box>
+          <NewChannelForm />
           {
             channels.map(channel =>
               <Channel
@@ -44,6 +49,48 @@ export function Channels() {
         </Grid>
       </Container>
     </ContentLayout>
+  );
+}
+
+const NewChannelForm = () => {
+  const [channelName, setChannelName] = useState('');
+
+  const createChannel = () => {
+    if (channelName.replace(/\s/g,'').length > 0) {
+      createChannelApi(channelName, "icon", "description");
+      setChannelName("");
+    }
+  };
+  const keyUpHandler = (e) => {
+    if (e.detail.keyCode === 13 && !e.detail.shiftKey) {
+      createChannel();
+    }
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    createChannel();
+  };
+  const cancelHandler = () => {
+    setChannelName("")
+  };
+
+  return (
+    <form onSubmit={submitHandler}>
+    <Form>
+      <Textarea
+        onChange={({detail}) => setChannelName(detail.value)}
+        onKeyUp={keyUpHandler}
+        value={channelName}
+        rows="1"
+      />
+      <Box>
+        <SpaceBetween direction="horizontal" size="xs">
+          <Button formAction="none" iconName="undo" variant="icon" onClick={cancelHandler} />
+          <Button formAction="submit" iconName="add-plus" variant="icon" />
+        </SpaceBetween>
+      </Box>
+    </Form>
+    </form>
   );
 }
 
