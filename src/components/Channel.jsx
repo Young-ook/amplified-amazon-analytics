@@ -145,7 +145,6 @@ function fetchChannelApi() {
   }
 }
 
-
 function createChannelApi(name, icon='', description='') {
   try {
     API.graphql(graphqlOperation(createChannel, {

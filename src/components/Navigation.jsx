@@ -15,7 +15,6 @@ async function signOut() {
   }
 }
 
-
 export function Workspace () {
   const [activeHref, setActiveHref] = useState("#/page1");
 
@@ -53,6 +52,12 @@ export function Workspace () {
 }
 
 export function NavigationBar () {
+  const itemClickHandler = (e) => {
+    if (e.detail.id == "signout") {
+      signOut();
+    }
+  };
+
   return (
     <TopNavigation
       identity={{
@@ -101,6 +106,7 @@ export function NavigationBar () {
           text: "Customer Name",
           description: "email@example.com",
           iconName: "user-profile",
+          onItemClick: itemClickHandler,
           items: [
             { id: "profile", text: "Profile" },
             { id: "preferences", text: "Preferences" },
@@ -129,8 +135,7 @@ export function NavigationBar () {
               ]
             },
             { id: "signout", text: "Sign out" }
-          ],
-          onItemClick: () => signOut()
+          ]
         }
       ]}
       i18nStrings={{
