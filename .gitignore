@@ -148,3 +148,6 @@ amplify/backend/api/*/cli-inputs.json
 amplify/backend/api/*/parameters.json
 amplify/backend/backend-config.json
 amplify/cli.json
+
+# auto-generated files
+src/graphql/*.js
