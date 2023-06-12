@@ -10,7 +10,7 @@ type Workspace @model @auth(rules: [{allow: owner}, {allow: private, operations:
   channels: [Channel] @hasMany(indexName: "byWorkspace", fields: ["id"])
 }
 
-type Channel @model @auth(rules: [{allow: owner}]) {
+type Channel @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
   id: ID!
   name: String!
   description: String
@@ -19,7 +19,7 @@ type Channel @model @auth(rules: [{allow: owner}]) {
   messges: [Message] @hasMany(indexName: "byChannel", fields: ["id"])
 }
 
-type Message @model @auth(rules: [{allow: owner}]) {
+type Message @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
   id: ID!
   channelId: ID! @index(name: "byChannel")
   content: String
