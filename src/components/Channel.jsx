@@ -8,9 +8,9 @@ import {
   Form,
   Grid,
   Header,
+  Input,
   Link,
-  SpaceBetween,
-  Textarea
+  SpaceBetween
 } from "@cloudscape-design/components";
 
 // components
@@ -77,11 +77,10 @@ const NewChannelForm = () => {
   return (
     <form onSubmit={submitHandler}>
     <Form>
-      <Textarea
-        onChange={({detail}) => setChannelName(detail.value)}
-        onKeyUp={keyUpHandler}
+      <Input
+        onChange={({ detail }) => setChannelName(detail.value)}
         value={channelName}
-        rows="1"
+        onKeyUp={keyUpHandler}
       />
       <Box>
         <SpaceBetween direction="horizontal" size="xs">

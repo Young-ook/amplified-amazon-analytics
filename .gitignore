@@ -149,3 +149,6 @@ amplify/backend/api/*/parameters.json
 amplify/backend/backend-config.json
 amplify/backend/types/amplify-dependent-resources-ref.d.ts
 amplify/cli.json
+
+# auto-generated files
+src/graphql/*.js
