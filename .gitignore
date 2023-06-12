@@ -147,4 +147,5 @@ amplify/team-provider-info.json
 amplify/backend/api/*/cli-inputs.json
 amplify/backend/api/*/parameters.json
 amplify/backend/backend-config.json
+amplify/backend/types/amplify-dependent-resources-ref.d.ts
 amplify/cli.json
