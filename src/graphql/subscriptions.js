@@ -1,6 +1,87 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateWorkspace = /* GraphQL */ `
+  subscription OnCreateWorkspace(
+    $filter: ModelSubscriptionWorkspaceFilterInput
+  ) {
+    onCreateWorkspace(filter: $filter) {
+      id
+      text
+      type
+      href
+      channels {
+        items {
+          id
+          name
+          description
+          icon
+          workspaceId
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateWorkspace = /* GraphQL */ `
+  subscription OnUpdateWorkspace(
+    $filter: ModelSubscriptionWorkspaceFilterInput
+  ) {
+    onUpdateWorkspace(filter: $filter) {
+      id
+      text
+      type
+      href
+      channels {
+        items {
+          id
+          name
+          description
+          icon
+          workspaceId
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteWorkspace = /* GraphQL */ `
+  subscription OnDeleteWorkspace(
+    $filter: ModelSubscriptionWorkspaceFilterInput
+  ) {
+    onDeleteWorkspace(filter: $filter) {
+      id
+      text
+      type
+      href
+      channels {
+        items {
+          id
+          name
+          description
+          icon
+          workspaceId
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateChannel = /* GraphQL */ `
   subscription OnCreateChannel(
     $filter: ModelSubscriptionChannelFilterInput
@@ -11,6 +92,7 @@ export const onCreateChannel = /* GraphQL */ `
       name
       description
       icon
+      workspaceId
       messges {
         items {
           id
@@ -38,6 +120,7 @@ export const onUpdateChannel = /* GraphQL */ `
       name
       description
       icon
+      workspaceId
       messges {
         items {
           id
@@ -65,6 +148,7 @@ export const onDeleteChannel = /* GraphQL */ `
       name
       description
       icon
+      workspaceId
       messges {
         items {
           id

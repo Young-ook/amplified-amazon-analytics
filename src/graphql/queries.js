@@ -1,6 +1,53 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getWorkspace = /* GraphQL */ `
+  query GetWorkspace($id: ID!) {
+    getWorkspace(id: $id) {
+      id
+      text
+      type
+      href
+      channels {
+        items {
+          id
+          name
+          description
+          icon
+          workspaceId
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listWorkspaces = /* GraphQL */ `
+  query ListWorkspaces(
+    $filter: ModelWorkspaceFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listWorkspaces(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        text
+        type
+        href
+        channels {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getChannel = /* GraphQL */ `
   query GetChannel($id: ID!) {
     getChannel(id: $id) {
@@ -8,6 +55,7 @@ export const getChannel = /* GraphQL */ `
       name
       description
       icon
+      workspaceId
       messges {
         items {
           id
@@ -37,6 +85,7 @@ export const listChannels = /* GraphQL */ `
         name
         description
         icon
+        workspaceId
         messges {
           nextToken
         }
@@ -71,6 +120,38 @@ export const listMessages = /* GraphQL */ `
         id
         channelId
         content
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const channelsByWorkspaceId = /* GraphQL */ `
+  query ChannelsByWorkspaceId(
+    $workspaceId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelChannelFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    channelsByWorkspaceId(
+      workspaceId: $workspaceId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        description
+        icon
+        workspaceId
+        messges {
+          nextToken
+        }
         createdAt
         updatedAt
         owner

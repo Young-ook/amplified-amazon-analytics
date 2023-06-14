@@ -16,14 +16,14 @@ import {
 // components
 import { Messages } from "./Message";
 
-//apis
+// apis
 import { API, graphqlOperation } from 'aws-amplify'
 import { listChannels } from '../graphql/queries'
 import { createChannel, updateChannel, deleteChannel } from '../graphql/mutations'
 import { onCreateChannel, onUpdateChannel, onDeleteChannel } from '../graphql/subscriptions';
 
-export function Channels() {
-  const [channels] = useAsyncData(() => fetchChannelApi());
+export function Channels(workspace) {
+  const [channels] = useAsyncData(() => fetchChannelApi(workspace.workspaceId));
   const [activeChannel, setActiveChannel] = useState(null);
 
   return (
@@ -33,7 +33,9 @@ export function Channels() {
       <Container>
         <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
           <Box>
-          <NewChannelForm />
+          <NewChannelForm
+            workspaceId={workspace.workspaceId}
+          />
           {
             channels.map(channel =>
               <Channel
@@ -52,12 +54,14 @@ export function Channels() {
   );
 }
 
-const NewChannelForm = () => {
+const NewChannelForm = ({
+  workspaceId
+}) => {
   const [channelName, setChannelName] = useState('');
 
   const createChannel = () => {
     if (channelName.replace(/\s/g,'').length > 0) {
-      createChannelApi(channelName, "icon", "description");
+      createChannelApi(channelName, "icon", "description", workspaceId);
       setChannelName("");
     }
   };
@@ -132,9 +136,9 @@ function useAsyncData(loadChannels) {
 }
 
 // graphql apis
-function fetchChannelApi() {
+function fetchChannelApi(workspaceId='') {
   try {
-    return API.graphql(graphqlOperation(listChannels)).then(
+    return API.graphql(graphqlOperation(listChannels, {filter: {workspaceId: {eq: workspaceId}}})).then(
       result => {
         return result.data.listChannels.items;
     });
@@ -144,10 +148,10 @@ function fetchChannelApi() {
   }
 }
 
-function createChannelApi(name, icon='', description='') {
+function createChannelApi(name, icon='', description='', workspaceId='') {
   try {
     API.graphql(graphqlOperation(createChannel, {
-      input: { name: name, description: description, icon: icon }
+      input: { name: name, description: description, icon: icon, workspaceId: workspaceId }
     }));
   }
   catch (e) {
