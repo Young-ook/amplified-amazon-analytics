@@ -23,8 +23,8 @@ import { createChannel, updateChannel, deleteChannel } from '../graphql/mutation
 import { onCreateChannel, onUpdateChannel, onDeleteChannel } from '../graphql/subscriptions';
 
 export function Channels(workspace) {
-  const [channels] = useAsyncData(() => fetchChannelApi(workspace.workspaceId));
   const [activeChannel, setActiveChannel] = useState(null);
+  const [channels] = useAsyncData(() => fetchChannelApi(workspace.workspaceId));
 
   return (
     <ContentLayout
@@ -47,7 +47,10 @@ export function Channels(workspace) {
             )
           }
           </Box>
-          <Messages channelId={activeChannel} channelName={activeChannel} />
+          <Messages
+            channelId={activeChannel}
+            channelName={activeChannel}
+          />
         </Grid>
       </Container>
     </ContentLayout>

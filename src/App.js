@@ -22,7 +22,7 @@ function App ({ signOut, user }) {
       <AppLayout
         ref={appLayout}
         headerSelector="#h"
-        navigation={<Workspace activeWorkspace={setActiveWorkspace} />}
+        navigation={<Workspace setActiveWorkspace={setActiveWorkspace} />}
         content={<Channels workspaceId={activeWorkspace} />}
       />
     </>
