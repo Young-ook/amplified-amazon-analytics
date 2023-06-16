@@ -65,17 +65,9 @@ const NewChannelForm = ({
       setChannelName("");
     }
   };
-  const keyUpHandler = (e) => {
-    if (e.detail.keyCode === 13 && !e.detail.shiftKey) {
-      createChannel();
-    }
-  };
   const submitHandler = (e) => {
     e.preventDefault();
     createChannel();
-  };
-  const cancelHandler = () => {
-    setChannelName("")
   };
 
   return (
@@ -84,11 +76,9 @@ const NewChannelForm = ({
       <Input
         onChange={({ detail }) => setChannelName(detail.value)}
         value={channelName}
-        onKeyUp={keyUpHandler}
       />
       <Box>
         <SpaceBetween direction="horizontal" size="xs">
-          <Button formAction="none" iconName="undo" variant="icon" onClick={cancelHandler} />
           <Button formAction="submit" iconName="add-plus" variant="icon" />
         </SpaceBetween>
       </Box>
