@@ -19,11 +19,10 @@ import { Messages } from "./Message";
 // apis
 import { API, graphqlOperation } from 'aws-amplify'
 import { listChannels } from '../graphql/queries'
-import { createChannel, updateChannel, deleteChannel } from '../graphql/mutations'
-import { onCreateChannel, onUpdateChannel, onDeleteChannel } from '../graphql/subscriptions';
+import { createChannel } from '../graphql/mutations'
 
 export function Channels(workspace) {
-  const [activeChannel, setActiveChannel] = useState(null);
+  const [activeChannel, setActiveChannel] = useState({channelId: null, workspaceId: workspace.workspaceId});
   const [channels] = useAsyncData(() => fetchChannelApi(workspace.workspaceId));
 
   return (
@@ -48,8 +47,8 @@ export function Channels(workspace) {
           }
           </Box>
           <Messages
-            channelId={activeChannel}
-            channelName={activeChannel}
+            channelId={activeChannel.channelId}
+            channelName={activeChannel.channelId}
           />
         </Grid>
       </Container>
@@ -95,10 +94,15 @@ const Channel = ({
   activeChannel,
   setActiveChannel,
 }) => {
-  if (!activeChannel) { setActiveChannel(channel.id) }
+  if (activeChannel.channelId == null) {
+    setActiveChannel({channelId: channel.id, workspaceId: channel.workspaceId});
+  }
+  if (activeChannel.workspaceId !== channel.workspaceId) {
+    setActiveChannel({channelId: channel.id, workspaceId: channel.workspaceId});
+  }
+
   const switchChannelHandler = () => {
-    //setActiveChannel({ id: channel.id, name: channel.name})
-    setActiveChannel(channel.id)
+    setActiveChannel({channelId: channel.id, workspaceId: channel.workspaceId});
   }
 
   return (
@@ -138,28 +142,6 @@ function createChannelApi(name, icon='', description='', workspaceId='') {
   try {
     API.graphql(graphqlOperation(createChannel, {
       input: { name: name, description: description, icon: icon, workspaceId: workspaceId }
-    }));
-  }
-  catch (e) {
-    console.log({e});
-  }
-}
-
-function editChannelApi(id, version, name) {
-  try {
-    API.graphql(graphqlOperation(updateChannel, {
-      input: { id: id, _version: version, name: name }
-    }));
-  }
-  catch (e) {
-    console.log({e});
-  }
-}
-
-function deleteChannelApi(id, version) {
-  try {
-    API.graphql(graphqlOperation(deleteChannel, {
-      input: { id: id, _version: version }
     }));
   }
   catch (e) {
