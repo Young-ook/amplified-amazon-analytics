@@ -23,8 +23,8 @@ import { createChannel, updateChannel, deleteChannel } from '../graphql/mutation
 import { onCreateChannel, onUpdateChannel, onDeleteChannel } from '../graphql/subscriptions';
 
 export function Channels(workspace) {
-  const [channels] = useAsyncData(() => fetchChannelApi(workspace.workspaceId));
   const [activeChannel, setActiveChannel] = useState(null);
+  const [channels] = useAsyncData(() => fetchChannelApi(workspace.workspaceId));
 
   return (
     <ContentLayout
@@ -47,7 +47,10 @@ export function Channels(workspace) {
             )
           }
           </Box>
-          <Messages channelId={activeChannel} channelName={activeChannel} />
+          <Messages
+            channelId={activeChannel}
+            channelName={activeChannel}
+          />
         </Grid>
       </Container>
     </ContentLayout>
@@ -65,17 +68,9 @@ const NewChannelForm = ({
       setChannelName("");
     }
   };
-  const keyUpHandler = (e) => {
-    if (e.detail.keyCode === 13 && !e.detail.shiftKey) {
-      createChannel();
-    }
-  };
   const submitHandler = (e) => {
     e.preventDefault();
     createChannel();
-  };
-  const cancelHandler = () => {
-    setChannelName("")
   };
 
   return (
@@ -84,11 +79,9 @@ const NewChannelForm = ({
       <Input
         onChange={({ detail }) => setChannelName(detail.value)}
         value={channelName}
-        onKeyUp={keyUpHandler}
       />
       <Box>
         <SpaceBetween direction="horizontal" size="xs">
-          <Button formAction="none" iconName="undo" variant="icon" onClick={cancelHandler} />
           <Button formAction="submit" iconName="add-plus" variant="icon" />
         </SpaceBetween>
       </Box>
@@ -115,24 +108,17 @@ const Channel = ({
   );
 }
 
-function useAsyncData(loadChannels) {
+function useAsyncData(loadItems) {
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let rendered = true;
-    loadChannels().then(items => {
-      if (rendered) {
-        setItems(items);
-        setLoading(false);
-      }
+    loadItems().then(items => {
+      setItems(items);
     });
-    return () => {
-      rendered = false;
-    };
-  }, [loadChannels]);
+    return () => {};
+  }, [loadItems]);
 
-  return [items, loading];
+  return [items];
 }
 
 // graphql apis

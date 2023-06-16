@@ -21,8 +21,8 @@ import { onCreateMessage, onUpdateMessage, onDeleteMessage } from '../graphql/su
 import moment from "moment";
 
 export function Messages(channel) {
-  const [messages, setMessages] = useState([]);
   const [activeMessage, setActiveMessage] = useState(null);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const fetchMessages = async () => {

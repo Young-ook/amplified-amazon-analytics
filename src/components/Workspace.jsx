@@ -9,7 +9,7 @@ import {
 import { API, graphqlOperation } from 'aws-amplify'
 import { listWorkspaces } from '../graphql/queries'
 
-export function Workspace ({activeWorkspace}) {
+export function Workspace ({setActiveWorkspace}) {
   const [workspaces] = useAsyncData(() => fetchWorkspaceApi());
 
   return (
@@ -18,7 +18,7 @@ export function Workspace ({activeWorkspace}) {
       onFollow={event => {
         if (!event.detail.external) {
           event.preventDefault();
-          activeWorkspace(event.detail.id);
+          setActiveWorkspace(event.detail.id);
         }
       }}
       items={workspaces}
