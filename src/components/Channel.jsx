@@ -108,24 +108,17 @@ const Channel = ({
   );
 }
 
-function useAsyncData(loadChannels) {
+function useAsyncData(loadItems) {
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let rendered = true;
-    loadChannels().then(items => {
-      if (rendered) {
-        setItems(items);
-        setLoading(false);
-      }
+    loadItems().then(items => {
+      setItems(items);
     });
-    return () => {
-      rendered = false;
-    };
-  }, [loadChannels]);
+    return () => {};
+  }, [loadItems]);
 
-  return [items, loading];
+  return [items];
 }
 
 // graphql apis
