@@ -24,7 +24,7 @@ amplify add auth
 # create data stores and api server
 amplify add api
  - blank
- - api key
+ - cognito user pool
 
 # update api schema
 amplify update api
