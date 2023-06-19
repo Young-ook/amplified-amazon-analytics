@@ -14,7 +14,8 @@ export function Workspace ({setActiveWorkspace}) {
 
   return (
     <SideNavigation
-      header={{ text: "Workspace" }}
+      activeHref="#/"
+      header={{ href: "#/", text: "Workspace" }}
       onFollow={event => {
         if (!event.detail.external && event.detail.text !== "Workspace") {
           event.preventDefault();
