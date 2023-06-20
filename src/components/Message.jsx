@@ -215,9 +215,9 @@ const MessageForm = ({
           rows={post.split(/\r\n|\r|\n/).length}
         />
         <Box>
-          <SpaceBetween direction="horizontal" size="xs">
+          <SpaceBetween direction="horizontal" size="xxs">
             <Button formAction="none" iconName="undo" variant="icon" onClick={cancelHandler} />
-            <Button formAction="submit" iconName="upload" variant="icon" />
+            <Button formAction="submit" iconName="caret-right-filled" variant="icon" />
           </SpaceBetween>
         </Box>
       </Grid>
