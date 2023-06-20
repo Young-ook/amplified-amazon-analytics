@@ -65,22 +65,28 @@ export function Messages(channel) {
 
   return (
     <>
-      <Box float='center' variant='h3'>{channel.channelId}</Box>
-      <Box float='center'>
-        <SpaceBetween size="xs">
-        {
-          messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.createdAt)).map(message =>
-            <Message
-              key={message.id}
-              message={message}
-              activeMessage={activeMessage}
-              setActiveMessage={setActiveMessage}
-            />
-          )) : <NoMessage />
-        }
+    <SpaceBetween size="s">
+      <Container>
+        <Box float='center' variant='h3'>{channel.channelId}</Box>
+        <Box float='center'>
+          <SpaceBetween size="xs">
+          {
+            messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.createdAt)).map(message =>
+              <Message
+                key={message.id}
+                message={message}
+                activeMessage={activeMessage}
+                setActiveMessage={setActiveMessage}
+              />
+            )) : <NoMessage />
+          }
+          </SpaceBetween>
+        </Box>
+      </Container>
+      <Container>
         <MessageForm channelId={channel.channelId} />
-        </SpaceBetween>
-      </Box>
+      </Container>
+    </SpaceBetween>
     </>
   );
 }
@@ -203,7 +209,6 @@ const MessageForm = ({
   };
 
   return (
-    <Container>
     <form onSubmit={submitHandler}>
     <Form
       actions={
@@ -223,7 +228,6 @@ const MessageForm = ({
       />
     </Form>
     </form>
-    </Container>
   );
 }
 
