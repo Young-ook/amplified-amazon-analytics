@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
+  Container,
   Form,
-  Grid,
   Header,
   Modal,
   SpaceBetween,
@@ -203,26 +203,27 @@ const MessageForm = ({
   };
 
   return (
+    <Container>
     <form onSubmit={submitHandler}>
-    <Form>
-      <Grid
-        gridDefinition={[{ colspan: 10 }, { colspan: 2 }]}
-      >
-        <Textarea
-          onChange={({detail}) => setPost(detail.value)}
-          onKeyUp={keyUpHandler}
-          value={post}
-          rows={post.split(/\r\n|\r|\n/).length}
-        />
+    <Form
+      actions={
         <Box>
           <SpaceBetween direction="horizontal" size="xxs">
             <Button formAction="none" iconName="undo" variant="icon" onClick={cancelHandler} />
             <Button formAction="submit" iconName="caret-right-filled" variant="icon" />
           </SpaceBetween>
         </Box>
-      </Grid>
+      }
+    >
+      <Textarea
+        onChange={({detail}) => setPost(detail.value)}
+        onKeyUp={keyUpHandler}
+        value={post}
+        rows={post.split(/\r\n|\r|\n/).length}
+      />
     </Form>
     </form>
+    </Container>
   );
 }
 
