@@ -29,9 +29,8 @@ export function Channels(workspace) {
     <ContentLayout
       header={<Header variant="h1" />}
     >
-      <Container>
-        <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
-          <Box>
+      <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
+        <Container>
           <NewChannelForm
             workspaceId={workspace.workspaceId}
           />
@@ -45,13 +44,12 @@ export function Channels(workspace) {
               />
             )
           }
-          </Box>
-          <Messages
-            channelId={activeChannel.channelId}
-            channelName={activeChannel.channelId}
-          />
-        </Grid>
-      </Container>
+        </Container>
+        <Messages
+          channelId={activeChannel.channelId}
+          channelName={activeChannel.channelId}
+        />
+      </Grid>
     </ContentLayout>
   );
 }

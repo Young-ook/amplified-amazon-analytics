@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
+  Container,
   Form,
-  Grid,
   Header,
   Modal,
   SpaceBetween,
@@ -65,22 +65,28 @@ export function Messages(channel) {
 
   return (
     <>
-      <Box float='center' variant='h3'>{channel.channelId}</Box>
-      <Box float='center'>
-        <SpaceBetween size="xs">
-        {
-          messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.createdAt)).map(message =>
-            <Message
-              key={message.id}
-              message={message}
-              activeMessage={activeMessage}
-              setActiveMessage={setActiveMessage}
-            />
-          )) : <NoMessage />
-        }
+    <SpaceBetween size="s">
+      <Container>
+        <Box float='center' variant='h3'>{channel.channelId}</Box>
+        <Box float='center'>
+          <SpaceBetween size="xs">
+          {
+            messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.createdAt)).map(message =>
+              <Message
+                key={message.id}
+                message={message}
+                activeMessage={activeMessage}
+                setActiveMessage={setActiveMessage}
+              />
+            )) : <NoMessage />
+          }
+          </SpaceBetween>
+        </Box>
+      </Container>
+      <Container>
         <MessageForm channelId={channel.channelId} />
-        </SpaceBetween>
-      </Box>
+      </Container>
+    </SpaceBetween>
     </>
   );
 }
@@ -204,23 +210,22 @@ const MessageForm = ({
 
   return (
     <form onSubmit={submitHandler}>
-    <Form>
-      <Grid
-        gridDefinition={[{ colspan: 10 }, { colspan: 2 }]}
-      >
-        <Textarea
-          onChange={({detail}) => setPost(detail.value)}
-          onKeyUp={keyUpHandler}
-          value={post}
-          rows={post.split(/\r\n|\r|\n/).length}
-        />
+    <Form
+      actions={
         <Box>
-          <SpaceBetween direction="horizontal" size="xs">
+          <SpaceBetween direction="horizontal" size="xxs">
             <Button formAction="none" iconName="undo" variant="icon" onClick={cancelHandler} />
-            <Button formAction="submit" iconName="upload" variant="icon" />
+            <Button formAction="submit" iconName="caret-right-filled" variant="icon" />
           </SpaceBetween>
         </Box>
-      </Grid>
+      }
+    >
+      <Textarea
+        onChange={({detail}) => setPost(detail.value)}
+        onKeyUp={keyUpHandler}
+        value={post}
+        rows={post.split(/\r\n|\r|\n/).length}
+      />
     </Form>
     </form>
   );
