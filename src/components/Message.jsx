@@ -183,13 +183,13 @@ const MessageForm = ({
   const [post, setPost] = useState(initText);
 
   const sendMessage = () => {
-    if (post.replace(/\s/g,'').length > 0) {
+    if (post.replace(/\s/g, '').length > 0) {
       if (activeMessage && activeMessage.type === "edit") {
-        editMessageApi(messageId, messageVersion, post);
+        editMessageApi(messageId, messageVersion, post.trim());
         setActiveMessage(null);
       }
       else {
-        createMessageApi(post, channelId);
+        createMessageApi(channelId, post.trim());
         setPost("");
       }
     }
@@ -232,7 +232,7 @@ const MessageForm = ({
 }
 
 // graphql apis
-function createMessageApi(post, channelId) {
+function createMessageApi(channelId, post) {
   try {
     API.graphql(graphqlOperation(createMessage, {
       input: { content: post, channelId: channelId }
