@@ -156,7 +156,8 @@ const Message = ({
       onDismiss={() => setConfirmVisible(false)}
       visible={confirmVisible}
       closeAriaLabel="Close modal"
-      size="small"
+      size="medium"
+      header="Delete message"
       footer={
         <Box float="right">
           <SpaceBetween direction="horizontal" size="xs">
@@ -166,7 +167,7 @@ const Message = ({
         </Box>
       }
     >
-      Are you sure to delete the message?
+      Are you sure you want to delete this message? This cannot be undone.
     </Modal>
     </>
   );
