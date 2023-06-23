@@ -4,16 +4,10 @@ import {
   TopNavigation
 } from "@cloudscape-design/components";
 
-async function signOut() {
-  try {
-    await Auth.signOut();
-    console.log('signed out');
-  } catch (error) {
-    console.log('error signing out: ', error);
-  }
-}
-
 export function NavigationBar () {
+  const [email, setEmail] =useState('');
+  getUserInfo().then((user) => setEmail(user.attributes.email));
+
   const itemClickHandler = (e) => {
     if (e.detail.id == "signout") {
       signOut();
@@ -51,8 +45,7 @@ export function NavigationBar () {
         {
           type: "menu-dropdown",
           text: "User",
-          description: "email@example.com",
-          //description: {user.id},
+          description: email,
           iconName: "user-profile",
           onItemClick: itemClickHandler,
           items: [
@@ -80,4 +73,24 @@ export function NavigationBar () {
       }}
     />
   );
+}
+
+// apis
+async function signOut() {
+  try {
+    await Auth.signOut();
+    console.log('signed out');
+  }
+  catch (err) {
+    console.log('error signing out: ', err);
+  }
+}
+
+async function getUserInfo() {
+  try {
+    return Auth.currentUserInfo();
+  }
+  catch (err) {
+    console.log('error when getting user info: ', err);
+  }
 }
