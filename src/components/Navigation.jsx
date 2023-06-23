@@ -4,16 +4,10 @@ import {
   TopNavigation
 } from "@cloudscape-design/components";
 
-async function signOut() {
-  try {
-    await Auth.signOut();
-    console.log('signed out');
-  } catch (error) {
-    console.log('error signing out: ', error);
-  }
-}
-
 export function NavigationBar () {
+  const [email, setEmail] =useState('');
+  getUserInfo().then((user) => setEmail(user.attributes.email));
+
   const itemClickHandler = (e) => {
     if (e.detail.id == "signout") {
       signOut();
@@ -33,21 +27,6 @@ export function NavigationBar () {
       }}
       utilities={[
         {
-          type: "button",
-          text: "Link",
-          href: "https://example.com/",
-          external: true,
-          externalIconAriaLabel: " (opens in a new tab)"
-        },
-        {
-          type: "button",
-          iconName: "notification",
-          title: "Notifications",
-          ariaLabel: "Notifications (unread)",
-          badge: true,
-          disableUtilityCollapse: false
-        },
-        {
           type: "menu-dropdown",
           iconName: "settings",
           ariaLabel: "Settings",
@@ -65,36 +44,20 @@ export function NavigationBar () {
         },
         {
           type: "menu-dropdown",
-          text: "Customer Name",
-          description: "email@example.com",
+          text: "User",
+          description: email,
           iconName: "user-profile",
           onItemClick: itemClickHandler,
           items: [
             { id: "profile", text: "Profile" },
             { id: "preferences", text: "Preferences" },
-            { id: "security", text: "Security" },
+            { id: "support", text: "Support" },
             {
-              id: "support-group",
-              text: "Support",
-              items: [
-                {
-                  id: "documentation",
-                  text: "Documentation",
-                  href: "#",
-                  external: true,
-                  externalIconAriaLabel:
-                    " (opens in new tab)"
-                },
-                { id: "support", text: "Support" },
-                {
-                  id: "feedback",
-                  text: "Feedback",
-                  href: "#",
-                  external: true,
-                  externalIconAriaLabel:
-                    " (opens in new tab)"
-                }
-              ]
+              id: "feedback",
+              text: "Feedback",
+              href: "#",
+              external: true,
+              externalIconAriaLabel: "(opens in new tab)"
             },
             { id: "signout", text: "Sign out" }
           ]
@@ -110,4 +73,24 @@ export function NavigationBar () {
       }}
     />
   );
+}
+
+// apis
+async function signOut() {
+  try {
+    await Auth.signOut();
+    console.log('signed out');
+  }
+  catch (err) {
+    console.log('error signing out: ', err);
+  }
+}
+
+async function getUserInfo() {
+  try {
+    return Auth.currentUserInfo();
+  }
+  catch (err) {
+    console.log('error when getting user info: ', err);
+  }
 }
