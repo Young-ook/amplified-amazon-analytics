@@ -131,8 +131,8 @@ function fetchChannelApi(workspaceId='') {
         return result.data.listChannels.items;
     });
   }
-  catch (e) {
-    console.log(e);
+  catch (err) {
+    console.log({err});
   }
 }
 
@@ -142,7 +142,7 @@ function createChannelApi(name, icon='', description='', workspaceId='') {
       input: { name: name, description: description, icon: icon, workspaceId: workspaceId }
     }));
   }
-  catch (e) {
-    console.log({e});
+  catch (err) {
+    console.log({err});
   }
 }

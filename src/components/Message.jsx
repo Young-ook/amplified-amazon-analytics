@@ -239,8 +239,8 @@ function createMessageApi(channelId, post) {
       input: { content: post, channelId: channelId }
     }));
   }
-  catch (e) {
-    console.log({e});
+  catch (err) {
+    console.log({err});
   }
 }
 
@@ -250,8 +250,8 @@ function editMessageApi(messageId, messageVersion, post) {
       input: { id: messageId, content: post, _version: messageVersion }
     }));
   }
-  catch (e) {
-    console.log({e});
+  catch (err) {
+    console.log({err});
   }
 }
 
@@ -261,7 +261,7 @@ function deleteMessageApi(messageId, messageVersion) {
       input: { id: messageId, _version: messageVersion }
     }));
   }
-  catch (e) {
-    console.log({e});
+  catch (err) {
+    console.log({err});
   }
 }
