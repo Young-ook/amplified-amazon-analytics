@@ -69,6 +69,7 @@ export function Messages(channel) {
       <Container>
         <Box float='center' variant='h3'>{channel.channelId}</Box>
         <Box float='center'>
+          <div style={{maxHeight:'360px',overflow:'auto',}}>
           <SpaceBetween size="xs">
           {
             messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.createdAt)).map(message =>
@@ -81,6 +82,7 @@ export function Messages(channel) {
             )) : <NoMessage />
           }
           </SpaceBetween>
+          </div>
         </Box>
       </Container>
       <Container>
