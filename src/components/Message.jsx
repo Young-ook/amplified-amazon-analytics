@@ -1,11 +1,13 @@
 // ui
 import React, { useState, useEffect } from "react";
 import {
+  Alert,
   Box,
   Button,
   Container,
   Form,
   Header,
+  Link,
   Modal,
   SpaceBetween,
   Textarea
@@ -170,6 +172,12 @@ const Message = ({
       }
     >
       Are you sure you want to delete this message? This cannot be undone.
+      <Alert statusIconAriaLabel="Info">
+        Proceeding with this action will delete the message and can affect related resources.{' '}
+        <Link external={true} href="https://cloudscape.design/" ariaLabel="Learn more about this, opens in new tab">
+          Learn more
+        </Link>
+      </Alert>
     </Modal>
     </>
   );
