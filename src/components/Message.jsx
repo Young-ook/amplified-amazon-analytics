@@ -22,13 +22,13 @@ import { onCreateMessage, onUpdateMessage, onDeleteMessage } from '../graphql/su
 // utils
 import moment from "moment";
 
-export function Messages(channel) {
+export function Messages(props) {
   const [activeMessage, setActiveMessage] = useState(null);
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const result = await API.graphql(graphqlOperation(listMessages, {filter: {channelId: {eq: channel.channelId}}}))
+      const result = await API.graphql(graphqlOperation(listMessages, {filter: {channelId: {eq: props.activeChannel.channelId}}}))
       setMessages(result.data.listMessages.items.filter(item => item._deleted !== true))
     }
     fetchMessages()
@@ -63,13 +63,14 @@ export function Messages(channel) {
       updateSub.unsubscribe()
       deleteSub.unsubscribe()
     }
-  }, [channel.channelId])
+  }, [props.activeChannel.channelId])
 
   return (
     <>
     <SpaceBetween size="s">
-      <Container>
-        <Box float='center' variant='h3'>{channel.channelId}</Box>
+      <Container
+        header={<Header variant='h3'>{props.activeChannel.channelName}</Header>}
+      >
         <Box float='center'>
           <div style={{maxHeight:'360px',overflow:'auto',}}>
           <SpaceBetween size="xs">
@@ -88,7 +89,7 @@ export function Messages(channel) {
         </Box>
       </Container>
       <Container>
-        <MessageForm channelId={channel.channelId} />
+        <MessageForm channelId={props.activeChannel.channelId} />
       </Container>
     </SpaceBetween>
     </>

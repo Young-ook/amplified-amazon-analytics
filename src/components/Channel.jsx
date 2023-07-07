@@ -22,7 +22,7 @@ import { listChannels } from '../graphql/queries'
 import { createChannel } from '../graphql/mutations'
 
 export function Channels(workspace) {
-  const [activeChannel, setActiveChannel] = useState({channelId: null, workspaceId: workspace.workspaceId});
+  const [activeChannel, setActiveChannel] = useState({channelId: null, channelName: null, workspaceId: workspace.workspaceId});
   const [channels] = useAsyncData(() => fetchChannelApi(workspace.workspaceId));
 
   return (
@@ -45,10 +45,7 @@ export function Channels(workspace) {
             )
           }
         </Container>
-        <Messages
-          channelId={activeChannel.channelId}
-          channelName={activeChannel.channelId}
-        />
+        <Messages activeChannel={activeChannel} />
       </Grid>
     </ContentLayout>
   );
@@ -93,14 +90,14 @@ const Channel = ({
   setActiveChannel,
 }) => {
   if (activeChannel.channelId == null) {
-    setActiveChannel({channelId: channel.id, workspaceId: channel.workspaceId});
+    setActiveChannel({channelId: channel.id, channelName: channel.name, workspaceId: channel.workspaceId});
   }
   if (activeChannel.workspaceId !== channel.workspaceId) {
-    setActiveChannel({channelId: channel.id, workspaceId: channel.workspaceId});
+    setActiveChannel({channelId: channel.id, channelName: channel.name, workspaceId: channel.workspaceId});
   }
 
   const switchChannelHandler = () => {
-    setActiveChannel({channelId: channel.id, workspaceId: channel.workspaceId});
+    setActiveChannel({channelId: channel.id, channelName: channel.name, workspaceId: channel.workspaceId});
   }
 
   return (
