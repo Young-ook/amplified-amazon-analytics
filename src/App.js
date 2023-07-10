@@ -1,6 +1,10 @@
 // ui
 import React, { useState, useRef } from "react";
-import { AppLayout } from "@cloudscape-design/components";
+import {
+  AppLayout,
+  ContentLayout,
+  Header,
+} from "@cloudscape-design/components";
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
@@ -23,7 +27,11 @@ function App ({ signOut, user }) {
         ref={appLayout}
         headerSelector="#h"
         navigation={<Workspace setActiveWorkspace={setActiveWorkspace} />}
-        content={<Channels userId={user.attributes.sub} workspace={activeWorkspace} />}
+        content={
+          <ContentLayout header={<Header variant="h1" />}>
+            <Channels userId={user.attributes.sub} workspace={activeWorkspace} />
+          </ContentLayout>
+        }
       />
     </>
   );
