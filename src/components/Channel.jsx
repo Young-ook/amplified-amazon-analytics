@@ -4,10 +4,8 @@ import {
   Box,
   Button,
   Container,
-  ContentLayout,
   Form,
   Grid,
-  Header,
   Input,
   Link,
   SpaceBetween
@@ -27,9 +25,7 @@ export function Channels({userId, workspace}) {
   const [channels] = useAsyncData(() => fetchChannelApi(workspace));
 
   return (
-    <ContentLayout
-      header={<Header variant="h1" />}
-    >
+    <>
       <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
         <Container>
           <NewChannelForm
@@ -49,7 +45,7 @@ export function Channels({userId, workspace}) {
         </Container>
         <Messages activeChannel={activeChannel} />
       </Grid>
-    </ContentLayout>
+    </>
   );
 }
 
