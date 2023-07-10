@@ -23,7 +23,7 @@ function App ({ signOut, user }) {
         ref={appLayout}
         headerSelector="#h"
         navigation={<Workspace setActiveWorkspace={setActiveWorkspace} />}
-        content={<Channels workspaceId={activeWorkspace} />}
+        content={<Channels userId={user.attributes.sub} workspace={activeWorkspace} />}
       />
     </>
   );

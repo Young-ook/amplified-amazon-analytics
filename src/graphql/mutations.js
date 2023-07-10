@@ -214,3 +214,45 @@ export const deleteMessage = /* GraphQL */ `
     }
   }
 `;
+export const createLastActivity = /* GraphQL */ `
+  mutation CreateLastActivity(
+    $input: CreateLastActivityInput!
+    $condition: ModelLastActivityConditionInput
+  ) {
+    createLastActivity(input: $input, condition: $condition) {
+      userId
+      log
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateLastActivity = /* GraphQL */ `
+  mutation UpdateLastActivity(
+    $input: UpdateLastActivityInput!
+    $condition: ModelLastActivityConditionInput
+  ) {
+    updateLastActivity(input: $input, condition: $condition) {
+      userId
+      log
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteLastActivity = /* GraphQL */ `
+  mutation DeleteLastActivity(
+    $input: DeleteLastActivityInput!
+    $condition: ModelLastActivityConditionInput
+  ) {
+    deleteLastActivity(input: $input, condition: $condition) {
+      userId
+      log
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;

@@ -1,7 +1,6 @@
 // ui
 import React, { useEffect, useState } from "react";
 import {
-  Badge,
   SideNavigation,
 } from "@cloudscape-design/components";
 

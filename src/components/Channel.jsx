@@ -15,15 +15,16 @@ import {
 
 // components
 import { Messages } from "./Message";
+import { logLastActivity } from './Activity'
 
 // apis
 import { API, graphqlOperation } from 'aws-amplify'
 import { listChannels } from '../graphql/queries'
 import { createChannel } from '../graphql/mutations'
 
-export function Channels(workspace) {
-  const [activeChannel, setActiveChannel] = useState({channelId: null, channelName: null, workspaceId: workspace.workspaceId});
-  const [channels] = useAsyncData(() => fetchChannelApi(workspace.workspaceId));
+export function Channels({userId, workspace}) {
+  const [activeChannel, setActiveChannel] = useState({channelId: null, channelName: null, workspaceId: workspace});
+  const [channels] = useAsyncData(() => fetchChannelApi(workspace));
 
   return (
     <ContentLayout
@@ -32,12 +33,13 @@ export function Channels(workspace) {
       <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
         <Container>
           <NewChannelForm
-            workspaceId={workspace.workspaceId}
+            workspaceId={workspace}
           />
           {
             channels.map(channel =>
               <Channel
                 key={channel.id}
+                userId={userId}
                 channel={channel}
                 activeChannel={activeChannel}
                 setActiveChannel={setActiveChannel}
@@ -85,6 +87,7 @@ const NewChannelForm = ({
 }
 
 const Channel = ({
+  userId,
   channel,
   activeChannel,
   setActiveChannel,
@@ -98,6 +101,7 @@ const Channel = ({
 
   const switchChannelHandler = () => {
     setActiveChannel({channelId: channel.id, channelName: channel.name, workspaceId: channel.workspaceId});
+    logLastActivity(userId, { workspace: channel.workspaceId, channel: channel.id });
   }
 
   return (

@@ -24,3 +24,8 @@ type Message @model @auth(rules: [{allow: owner}, {allow: private, operations: [
   channelId: ID! @index(name: "byChannel")
   content: String
 }
+
+type LastActivity @model @auth(rules: [{allow: owner}]) {
+  userId: String! @primaryKey
+  log: String!
+}
