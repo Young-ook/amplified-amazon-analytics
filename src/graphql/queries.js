@@ -128,6 +128,43 @@ export const listMessages = /* GraphQL */ `
     }
   }
 `;
+export const getLastActivity = /* GraphQL */ `
+  query GetLastActivity($userId: String!) {
+    getLastActivity(userId: $userId) {
+      userId
+      log
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listLastActivities = /* GraphQL */ `
+  query ListLastActivities(
+    $userId: String
+    $filter: ModelLastActivityFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listLastActivities(
+      userId: $userId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        userId
+        log
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const channelsByWorkspaceId = /* GraphQL */ `
   query ChannelsByWorkspaceId(
     $workspaceId: ID!

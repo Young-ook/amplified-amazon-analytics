@@ -211,3 +211,45 @@ export const onDeleteMessage = /* GraphQL */ `
     }
   }
 `;
+export const onCreateLastActivity = /* GraphQL */ `
+  subscription OnCreateLastActivity(
+    $filter: ModelSubscriptionLastActivityFilterInput
+    $owner: String
+  ) {
+    onCreateLastActivity(filter: $filter, owner: $owner) {
+      userId
+      log
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateLastActivity = /* GraphQL */ `
+  subscription OnUpdateLastActivity(
+    $filter: ModelSubscriptionLastActivityFilterInput
+    $owner: String
+  ) {
+    onUpdateLastActivity(filter: $filter, owner: $owner) {
+      userId
+      log
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteLastActivity = /* GraphQL */ `
+  subscription OnDeleteLastActivity(
+    $filter: ModelSubscriptionLastActivityFilterInput
+    $owner: String
+  ) {
+    onDeleteLastActivity(filter: $filter, owner: $owner) {
+      userId
+      log
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
