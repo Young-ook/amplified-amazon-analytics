@@ -63,7 +63,7 @@ export const Messages = props => {
       updateSub.unsubscribe()
       deleteSub.unsubscribe()
     }
-  }, [props.context.channel])
+  }, [props.context.channel, messages])
 
   return (
     <Box>

@@ -90,14 +90,14 @@ const Channel = ({
   context,
   setContext,
 }) => {
-  if (channel.workspaceId !== context.workspace) {
-    console.log("mismatch channels ---");
-    console.log(context);
+  if (!context.channel || context.channel == null) {
+    //setContext({...context, ...{channel: channel.id}});
   }
 
   const switchChannelHandler = () => {
-    setContext({...context, ...{channel: channel.id}});
-    logLastActivity(userId, context);
+    const updateContext = {...context, ...{channel: channel.id}};
+    setContext(updateContext);
+    logLastActivity(userId, updateContext);
   }
 
   return (
