@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { createRoot, createPortal } from "react-dom";
+import React from "react";
+import { createRoot } from "react-dom";
 import { Amplify } from "aws-amplify";
 import App from "./App";
 

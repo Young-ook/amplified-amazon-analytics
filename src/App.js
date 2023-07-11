@@ -1,7 +1,8 @@
 // ui
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   AppLayout,
+  Box,
   ContentLayout,
   Header,
 } from "@cloudscape-design/components";
@@ -12,28 +13,41 @@ import '@aws-amplify/ui-react/styles.css';
 import { NavigationBar } from "./components/Navigation";
 import { Workspace } from "./components/Workspace";
 import { Channels } from "./components/Channel";
+import { retrieveLastActivity } from './components/Activity'
 
 // application
 function App ({ signOut, user }) {
-  const [activeWorkspace, setActiveWorkspace] = useState(null);
   const appLayout = useRef();
+  const [context, setContext] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    retrieveLastActivity(user.attributes.sub).then((activity) => {
+      if (loading) {
+        setContext(JSON.parse(activity.log));
+        setLoading(false);
+      }
+    });
+  }, [context, loading, user]);
 
   return (
-    <>
-      <div id="h" style={{ position: 'sticky', top: 0, zIndex: 1002 }}>
-        <NavigationBar />
-      </div>
+    <Box>
+      <NavigationBar />
       <AppLayout
         ref={appLayout}
         headerSelector="#h"
-        navigation={<Workspace setActiveWorkspace={setActiveWorkspace} />}
+        navigation={<Workspace context={context} setContext={setContext} />}
         content={
-          <ContentLayout header={<Header variant="h1" />}>
-            <Channels userId={user.attributes.sub} workspace={activeWorkspace} />
-          </ContentLayout>
+          loading || context == null ? (
+            <Box/>
+          ) : (
+            <ContentLayout header={<Header variant="h1" />}>
+              <Channels userId={user.attributes.sub} context={context} setContext={setContext} />
+            </ContentLayout>
+          )
         }
       />
-    </>
+    </Box>
   );
 }
 
