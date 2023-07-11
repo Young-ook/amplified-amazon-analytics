@@ -10,7 +10,22 @@ import { listWorkspaces } from '../graphql/queries'
 
 export const Workspace = props => {
   const [activeHref, setActiveHref] = useState("#/");
-  const [workspaces] = useAsyncData(() => fetchWorkspaceApi());
+  const [workspaces, setWorkspaces] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (loading) {
+      fetchWorkspaceApi().then(workspaces => {
+        setWorkspaces(workspaces);
+        workspaces.forEach((workspace) => {
+          if (workspace.id === props.context.workspace) {
+             setActiveHref(workspace.href);
+             setLoading(false);
+          }
+        });
+      });
+    }
+  }, [workspaces, loading]);
 
   return (
     <SideNavigation
@@ -29,26 +44,6 @@ export const Workspace = props => {
       items={workspaces}
     />
   );
-}
-
-function useAsyncData(loadWorkspaces) {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let rendered = true;
-    loadWorkspaces().then(items => {
-      if (rendered) {
-        setItems(items);
-        setLoading(false);
-      }
-    });
-    return () => {
-      rendered = false;
-    };
-  }, [loadWorkspaces]);
-
-  return [items, loading];
 }
 
 // graphql apis
