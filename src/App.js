@@ -28,7 +28,7 @@ function App ({ signOut, user }) {
         setLoading(false);
       }
     });
-  }, [context]);
+  }, [context, loading, user]);
 
   return (
     <Box>
