@@ -9,16 +9,18 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { listWorkspaces } from '../graphql/queries'
 
 export function Workspace ({setActiveWorkspace}) {
+  const [activeHref, setActiveHref] = useState("#/");
   const [workspaces] = useAsyncData(() => fetchWorkspaceApi());
 
   return (
     <SideNavigation
-      activeHref="#/"
+      activeHref={activeHref}
       header={{ href: "#/", text: "Workspace" }}
       onFollow={event => {
         if (!event.detail.external && event.detail.text !== "Workspace") {
           event.preventDefault();
           setActiveWorkspace(event.detail.id);
+          setActiveHref(event.detail.href);
         }
       }}
       items={workspaces}
