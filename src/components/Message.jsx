@@ -66,33 +66,30 @@ export function Messages(props) {
   }, [props.activeChannel.channelId])
 
   return (
-    <>
-    <SpaceBetween size="s">
-      <Container
-        header={<Header variant='h3'>{props.activeChannel.channelName}</Header>}
-      >
-        <Box float='center'>
+    <Box>
+      <SpaceBetween size="s">
+        <Container
+          header={<Header variant='h3'>{props.activeChannel.channelName}</Header>}
+        >
           <div style={{maxHeight:'360px',overflow:'auto',}}>
-          <SpaceBetween size="xs">
-          {
-            messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.createdAt)).map(message =>
-              <Message
-                key={message.id}
-                message={message}
-                activeMessage={activeMessage}
-                setActiveMessage={setActiveMessage}
-              />
-            )) : <NoMessage />
-          }
-          </SpaceBetween>
+            <SpaceBetween size="xs">
+            {
+              messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.createdAt)).map(message =>
+                <Message
+                  message={message}
+                  activeMessage={activeMessage}
+                  setActiveMessage={setActiveMessage}
+                />
+              )) : <NoMessage />
+            }
+            </SpaceBetween>
           </div>
-        </Box>
-      </Container>
-      <Container>
-        <MessageForm channelId={props.activeChannel.channelId} />
-      </Container>
-    </SpaceBetween>
-    </>
+        </Container>
+        <Container>
+          <MessageForm channelId={props.activeChannel.channelId} />
+        </Container>
+      </SpaceBetween>
+    </Box>
   );
 }
 

@@ -25,7 +25,7 @@ export function Channels({userId, workspace}) {
   const [channels] = useAsyncData(() => fetchChannelApi(workspace));
 
   return (
-    <>
+    <Box>
       <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
         <Container>
           <NewChannelForm
@@ -45,7 +45,7 @@ export function Channels({userId, workspace}) {
         </Container>
         <Messages activeChannel={activeChannel} />
       </Grid>
-    </>
+    </Box>
   );
 }
 
