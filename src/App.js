@@ -2,6 +2,7 @@
 import React, { useState, useRef } from "react";
 import {
   AppLayout,
+  Box,
   ContentLayout,
   Header,
 } from "@cloudscape-design/components";
@@ -12,28 +13,33 @@ import '@aws-amplify/ui-react/styles.css';
 import { NavigationBar } from "./components/Navigation";
 import { Workspace } from "./components/Workspace";
 import { Channels } from "./components/Channel";
+import { retrieveLastActivity } from './components/Activity'
 
 // application
 function App ({ signOut, user }) {
   const [activeWorkspace, setActiveWorkspace] = useState(null);
   const appLayout = useRef();
 
+  let context;
+  retrieveLastActivity(user.attributes.sub).then((activity) => {
+    context = JSON.parse(activity.log);
+    console.log(context.workspace);
+  });
+
   return (
-    <>
-      <div id="h" style={{ position: 'sticky', top: 0, zIndex: 1002 }}>
-        <NavigationBar />
-      </div>
+    <Box>
+      <NavigationBar />
       <AppLayout
         ref={appLayout}
         headerSelector="#h"
-        navigation={<Workspace setActiveWorkspace={setActiveWorkspace} />}
+        navigation={<Workspace initWorkspace={context} setActiveWorkspace={setActiveWorkspace} />}
         content={
           <ContentLayout header={<Header variant="h1" />}>
             <Channels userId={user.attributes.sub} workspace={activeWorkspace} />
           </ContentLayout>
         }
       />
-    </>
+    </Box>
   );
 }
 
