@@ -24,9 +24,6 @@ export function logLastActivity(userId, log) {
       if (activity && activity != null) {
         const lastActivity = {...JSON.parse(activity.log), ...log};
 
-        console.log("--- logging");
-        console.log(lastActivity);
-
         API.graphql(graphqlOperation(updateLastActivity, {
           input: { userId: userId, log: JSON.stringify(lastActivity), _version: activity._version }
         }));

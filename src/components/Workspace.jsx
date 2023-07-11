@@ -36,9 +36,6 @@ export const Workspace = props => {
           event.preventDefault();
           setActiveHref(event.detail.href);
           props.setContext({...props.context, ...{workspace: event.detail.id}});
-
-          console.log("--- switching workspaces");
-          console.log(props.context);
         }
       }}
       items={workspaces}

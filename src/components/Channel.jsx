@@ -98,9 +98,6 @@ const Channel = ({
   const switchChannelHandler = () => {
     setContext({...context, ...{channel: channel.id}});
     logLastActivity(userId, context);
-
-    console.log("--- switching channels");
-    console.log(context);
   }
 
   return (
