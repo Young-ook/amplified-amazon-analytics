@@ -20,30 +20,32 @@ import { API, graphqlOperation } from 'aws-amplify'
 import { listChannels } from '../graphql/queries'
 import { createChannel } from '../graphql/mutations'
 
-export function Channels({userId, workspace}) {
-  const [activeChannel, setActiveChannel] = useState({channelId: null, channelName: null, workspaceId: workspace});
-  const [channels] = useAsyncData(() => fetchChannelApi(workspace));
+export const Channels = props => {
+  const [channels] = useAsyncData(() => fetchChannelApi(props.context.workspace));
 
   return (
     <Box>
       <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
         <Container>
           <NewChannelForm
-            workspaceId={workspace}
+            workspaceId={props.context.workspace}
           />
           {
             channels.map(channel =>
               <Channel
                 key={channel.id}
-                userId={userId}
+                userId={props.userId}
                 channel={channel}
-                activeChannel={activeChannel}
-                setActiveChannel={setActiveChannel}
+                context={props.context}
+                setContext={props.setContext}
               />
             )
           }
         </Container>
-        <Messages activeChannel={activeChannel} />
+        <Messages
+          context={props.context}
+          setContext={props.setContext}
+        />
       </Grid>
     </Box>
   );
@@ -85,19 +87,20 @@ const NewChannelForm = ({
 const Channel = ({
   userId,
   channel,
-  activeChannel,
-  setActiveChannel,
+  context,
+  setContext,
 }) => {
-  if (activeChannel.channelId == null) {
-    setActiveChannel({channelId: channel.id, channelName: channel.name, workspaceId: channel.workspaceId});
-  }
-  if (activeChannel.workspaceId !== channel.workspaceId) {
-    setActiveChannel({channelId: channel.id, channelName: channel.name, workspaceId: channel.workspaceId});
+  if (channel.workspaceId !== context.workspace) {
+    console.log("mismatch channels ---");
+    console.log(context);
   }
 
   const switchChannelHandler = () => {
-    setActiveChannel({channelId: channel.id, channelName: channel.name, workspaceId: channel.workspaceId});
-    logLastActivity(userId, { workspace: channel.workspaceId, channel: channel.id });
+    setContext({...context, ...{channel: channel.id}});
+    logLastActivity(userId, context);
+
+    console.log("--- switching channels");
+    console.log(context);
   }
 
   return (

@@ -8,7 +8,7 @@ import {
 import { API, graphqlOperation } from 'aws-amplify'
 import { listWorkspaces } from '../graphql/queries'
 
-export function Workspace ({setActiveWorkspace}) {
+export const Workspace = props => {
   const [activeHref, setActiveHref] = useState("#/");
   const [workspaces] = useAsyncData(() => fetchWorkspaceApi());
 
@@ -19,8 +19,11 @@ export function Workspace ({setActiveWorkspace}) {
       onFollow={event => {
         if (!event.detail.external && event.detail.text !== "Workspace") {
           event.preventDefault();
-          setActiveWorkspace(event.detail.id);
           setActiveHref(event.detail.href);
+          props.setContext({...props.context, ...{workspace: event.detail.id}});
+
+          console.log("--- switching workspaces");
+          console.log(props.context);
         }
       }}
       items={workspaces}

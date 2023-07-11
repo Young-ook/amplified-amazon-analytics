@@ -1,5 +1,5 @@
 // ui
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   AppLayout,
   Box,
@@ -17,14 +17,18 @@ import { retrieveLastActivity } from './components/Activity'
 
 // application
 function App ({ signOut, user }) {
-  const [activeWorkspace, setActiveWorkspace] = useState(null);
   const appLayout = useRef();
+  const [context, setContext] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  let context;
-  retrieveLastActivity(user.attributes.sub).then((activity) => {
-    context = JSON.parse(activity.log);
-    console.log(context.workspace);
-  });
+  useEffect(() => {
+    retrieveLastActivity(user.attributes.sub).then((activity) => {
+      if (loading) {
+        setContext(JSON.parse(activity.log));
+        setLoading(false);
+      }
+    });
+  }, [context]);
 
   return (
     <Box>
@@ -32,11 +36,15 @@ function App ({ signOut, user }) {
       <AppLayout
         ref={appLayout}
         headerSelector="#h"
-        navigation={<Workspace initWorkspace={context} setActiveWorkspace={setActiveWorkspace} />}
+        navigation={<Workspace context={context} setContext={setContext} />}
         content={
-          <ContentLayout header={<Header variant="h1" />}>
-            <Channels userId={user.attributes.sub} workspace={activeWorkspace} />
-          </ContentLayout>
+          loading || context == null ? (
+            <Box/>
+          ) : (
+            <ContentLayout header={<Header variant="h1" />}>
+              <Channels userId={user.attributes.sub} context={context} setContext={setContext} />
+            </ContentLayout>
+          )
         }
       />
     </Box>
