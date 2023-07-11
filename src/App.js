@@ -17,13 +17,15 @@ import { retrieveLastActivity } from './components/Activity'
 // application
 function App ({ signOut, user }) {
   const appLayout = useRef();
-  const [context, setContext] = useState(null);
+  const [context, setContext] = useState({channel: null});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     retrieveLastActivity(user.attributes.sub).then((activity) => {
       if (loading) {
-        setContext(JSON.parse(activity.log));
+        if (activity != null) {
+          setContext(JSON.parse(activity.log));
+        }
         setLoading(false);
       }
     });
@@ -37,7 +39,7 @@ function App ({ signOut, user }) {
         headerSelector="#h"
         navigation={<Navigation activeHref="#/distributions" />}
         content={
-          loading || context == null ? (
+          loading ? (
             <Box/>
           ) : (
             <ContentLayout header={<Header variant="h1" />}>

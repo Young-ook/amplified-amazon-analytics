@@ -21,16 +21,14 @@ export function retrieveLastActivity(userId) {
 export function logLastActivity(userId, log) {
   try {
     retrieveLastActivity(userId).then((activity) => {
-      const lastActivity = {...JSON.parse(activity.log), ...log};
-
       if (activity && activity != null) {
         API.graphql(graphqlOperation(updateLastActivity, {
-          input: { userId: userId, log: JSON.stringify(lastActivity), _version: activity._version }
+          input: { userId: userId, log: JSON.stringify({...JSON.parse(activity.log), ...log}), _version: activity._version }
         }));
       }
       else {
         API.graphql(graphqlOperation(createLastActivity, {
-          input: { userId: userId, log: JSON.stringify(lastActivity) }
+          input: { userId: userId, log: JSON.stringify(log) }
         }));
       }
     });
