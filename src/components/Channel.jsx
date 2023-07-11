@@ -21,15 +21,13 @@ import { listChannels } from '../graphql/queries'
 import { createChannel } from '../graphql/mutations'
 
 export const Channels = props => {
-  const [channels] = useAsyncData(() => fetchChannelApi(props.context.workspace));
+  const [channels] = useAsyncData(() => fetchChannelApi());
 
   return (
     <Box>
       <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
         <Container>
-          <NewChannelForm
-            workspaceId={props.context.workspace}
-          />
+          <NewChannelForm />
           {
             channels.map(channel =>
               <Channel
@@ -51,14 +49,12 @@ export const Channels = props => {
   );
 }
 
-const NewChannelForm = ({
-  workspaceId
-}) => {
+const NewChannelForm = () => {
   const [channelName, setChannelName] = useState('');
 
   const createChannel = () => {
     if (channelName.replace(/\s/g,'').length > 0) {
-      createChannelApi(channelName, "icon", "description", workspaceId);
+      createChannelApi(channelName, "icon", "description");
       setChannelName("");
     }
   };
@@ -91,7 +87,7 @@ const Channel = ({
   setContext,
 }) => {
   if (!context.channel || context.channel == null) {
-    //setContext({...context, ...{channel: channel.id}});
+    setContext({...context, ...{channel: channel.id}});
   }
 
   const switchChannelHandler = () => {
@@ -121,9 +117,9 @@ function useAsyncData(loadItems) {
 }
 
 // graphql apis
-function fetchChannelApi(workspaceId='') {
+function fetchChannelApi() {
   try {
-    return API.graphql(graphqlOperation(listChannels, {filter: {workspaceId: {eq: workspaceId}}})).then(
+    return API.graphql(graphqlOperation(listChannels)).then(
       result => {
         return result.data.listChannels.items;
     });
@@ -133,10 +129,10 @@ function fetchChannelApi(workspaceId='') {
   }
 }
 
-function createChannelApi(name, icon='', description='', workspaceId='') {
+function createChannelApi(name, icon='', description='') {
   try {
     API.graphql(graphqlOperation(createChannel, {
-      input: { name: name, description: description, icon: icon, workspaceId: workspaceId }
+      input: { name: name, description: description, icon: icon }
     }));
   }
   catch (err) {

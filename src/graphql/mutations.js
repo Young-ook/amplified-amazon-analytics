@@ -1,90 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createWorkspace = /* GraphQL */ `
-  mutation CreateWorkspace(
-    $input: CreateWorkspaceInput!
-    $condition: ModelWorkspaceConditionInput
-  ) {
-    createWorkspace(input: $input, condition: $condition) {
-      id
-      text
-      type
-      href
-      channels {
-        items {
-          id
-          name
-          description
-          icon
-          workspaceId
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateWorkspace = /* GraphQL */ `
-  mutation UpdateWorkspace(
-    $input: UpdateWorkspaceInput!
-    $condition: ModelWorkspaceConditionInput
-  ) {
-    updateWorkspace(input: $input, condition: $condition) {
-      id
-      text
-      type
-      href
-      channels {
-        items {
-          id
-          name
-          description
-          icon
-          workspaceId
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteWorkspace = /* GraphQL */ `
-  mutation DeleteWorkspace(
-    $input: DeleteWorkspaceInput!
-    $condition: ModelWorkspaceConditionInput
-  ) {
-    deleteWorkspace(input: $input, condition: $condition) {
-      id
-      text
-      type
-      href
-      channels {
-        items {
-          id
-          name
-          description
-          icon
-          workspaceId
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createChannel = /* GraphQL */ `
   mutation CreateChannel(
     $input: CreateChannelInput!
@@ -95,7 +11,6 @@ export const createChannel = /* GraphQL */ `
       name
       description
       icon
-      workspaceId
       messges {
         items {
           id
@@ -123,7 +38,6 @@ export const updateChannel = /* GraphQL */ `
       name
       description
       icon
-      workspaceId
       messges {
         items {
           id
@@ -151,7 +65,6 @@ export const deleteChannel = /* GraphQL */ `
       name
       description
       icon
-      workspaceId
       messges {
         items {
           id

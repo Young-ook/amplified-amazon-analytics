@@ -74,6 +74,7 @@ export const Messages = props => {
             {
               messages.length > 0 ? (messages.sort((b, a) => b.createdAt.localeCompare(a.createdAt)).map(message =>
                 <Message
+                  key={message.id}
                   message={message}
                   activeMessage={activeMessage}
                   setActiveMessage={setActiveMessage}
