@@ -10,8 +10,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
 // components
-import { NavigationBar } from "./components/Navigation";
-import { Workspace } from "./components/Workspace";
+import { Navigation, NavigationBar } from "./components/Navigation";
 import { Channels } from "./components/Channel";
 import { retrieveLastActivity } from './components/Activity'
 
@@ -36,7 +35,7 @@ function App ({ signOut, user }) {
       <AppLayout
         ref={appLayout}
         headerSelector="#h"
-        navigation={<Workspace context={context} setContext={setContext} />}
+        navigation={<Navigation activeHref="#/distributions" />}
         content={
           loading || context == null ? (
             <Box/>

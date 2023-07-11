@@ -1,15 +1,52 @@
 import React, { useState } from "react";
 import { Auth } from 'aws-amplify';
 import {
+  SideNavigation,
   TopNavigation
 } from "@cloudscape-design/components";
+
+export function Navigation({
+  activeHref,
+}) {
+  const navHeader = { text: 'Service', href: '#/' };
+  const navItems = [
+    {
+      type: 'section',
+      text: 'Reports and analytics',
+      items: [
+        { type: 'link', text: 'Distributions', href: '#/distributions' },
+        { type: 'link', text: 'Cache statistics', href: '#/cache' },
+        { type: 'link', text: 'Monitoring and alarms', href: '#/monitoring' },
+        { type: 'link', text: 'Popular objects', href: '#/popular' },
+        { type: 'link', text: 'Top referrers', href: '#/referrers' },
+        { type: 'link', text: 'Usage', href: '#/usage' },
+        { type: 'link', text: 'Viewers', href: '#/viewers' },
+      ],
+    },
+    {
+      type: 'section',
+      text: 'Private content',
+      items: [
+        { type: 'link', text: 'How-to guide', href: '#/howto' },
+        { type: 'link', text: 'Origin access identity', href: '#/origin' },
+      ],
+    },
+  ];
+
+  const defaultOnFollowHandler = event => {
+    // keep the locked href for our demo pages
+    event.preventDefault();
+  };
+
+  return <SideNavigation items={navItems} header={navHeader} activeHref={activeHref} onFollow={defaultOnFollowHandler} />;
+}
 
 export function NavigationBar () {
   const [email, setEmail] =useState('');
   getUserInfo().then((user) => setEmail(user.attributes.email));
 
   const itemClickHandler = (e) => {
-    if (e.detail.id == "signout") {
+    if (e.detail.id === "signout") {
       signOut();
     }
   };
