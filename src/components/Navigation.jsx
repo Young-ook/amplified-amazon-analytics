@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Auth } from 'aws-amplify';
 import {
   SideNavigation,
   TopNavigation
 } from "@cloudscape-design/components";
 
-export function Navigation({
-  activeHref,
-}) {
+export const Navigation = props => {
   const navHeader = { text: 'Service', href: '#/' };
   const navItems = [
     {
@@ -38,15 +36,14 @@ export function Navigation({
     event.preventDefault();
   };
 
-  return <SideNavigation items={navItems} header={navHeader} activeHref={activeHref} onFollow={defaultOnFollowHandler} />;
+  return <SideNavigation items={navItems} header={navHeader} activeHref={props.activeHref} onFollow={defaultOnFollowHandler} />;
 }
 
-export function NavigationBar () {
-  const [email, setEmail] =useState('');
-  getUserInfo().then((user) => setEmail(user.attributes.email));
+export const NavigationBar = props => {
+  const userInfo = props.userInfo;
 
-  const itemClickHandler = (e) => {
-    if (e.detail.id === "signout") {
+  const itemClickHandler = (event) => {
+    if (event.detail.id === "signout") {
       signOut();
     }
   };
@@ -81,8 +78,7 @@ export function NavigationBar () {
         },
         {
           type: "menu-dropdown",
-          text: "User",
-          description: email,
+          text: userInfo.email,
           iconName: "user-profile",
           onItemClick: itemClickHandler,
           items: [
@@ -120,14 +116,5 @@ async function signOut() {
   }
   catch (err) {
     console.log('error signing out: ', err);
-  }
-}
-
-async function getUserInfo() {
-  try {
-    return Auth.currentUserInfo();
-  }
-  catch (err) {
-    console.log('error when getting user info: ', err);
   }
 }

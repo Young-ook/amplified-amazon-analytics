@@ -33,7 +33,7 @@ function App ({ signOut, user }) {
 
   return (
     <Box>
-      <NavigationBar />
+      <NavigationBar userInfo={user.attributes} />
       <AppLayout
         ref={appLayout}
         headerSelector="#h"
