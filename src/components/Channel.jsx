@@ -43,6 +43,8 @@ export const Channels = props => {
         <Messages
           context={props.context}
           setContext={props.setContext}
+          alerts={props.alerts}
+          setAlerts={props.setAlerts}
         />
       </Grid>
     </Box>

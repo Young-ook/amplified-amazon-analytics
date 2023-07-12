@@ -89,6 +89,7 @@ function App ({ signOut, user }) {
                 userId={user.attributes.sub}
                 context={context}
                 setContext={setContext}
+                alerts={alerts}
                 setAlerts={setAlerts}
               />
             </ContentLayout>
