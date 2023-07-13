@@ -78,6 +78,8 @@ export const Messages = props => {
                   message={message}
                   activeMessage={activeMessage}
                   setActiveMessage={setActiveMessage}
+                  alerts={props.alerts}
+                  setAlerts={props.setAlerts}
                 />
               )) : <NoMessage />
             }
@@ -117,11 +119,13 @@ const Message = ({
   message,
   activeMessage,
   setActiveMessage,
+  alerts,
+  setAlerts,
 }) => {
   const [confirmVisible, setConfirmVisible] = useState(false);
   const isEditing = activeMessage && activeMessage.type === "edit" && activeMessage.id === message.id
   const deleteHandler = () => {
-    deleteMessageApi(message.id, message._version);
+    deleteMessageApi(message.id, message._version, alerts, setAlerts);
     setConfirmVisible(false);
   }
 
@@ -247,7 +251,7 @@ function createMessageApi(channelId, post) {
     }));
   }
   catch (err) {
-    console.log({err});
+    console.error(err);
   }
 }
 
@@ -258,17 +262,32 @@ function editMessageApi(messageId, messageVersion, post) {
     }));
   }
   catch (err) {
-    console.log({err});
+    console.error(err);
   }
 }
 
-function deleteMessageApi(messageId, messageVersion) {
+async function deleteMessageApi(messageId, messageVersion, alerts, setAlerts) {
   try {
-    API.graphql(graphqlOperation(deleteMessage, {
+    const result = await API.graphql(graphqlOperation(deleteMessage, {
       input: { id: messageId, _version: messageVersion }
     }));
+
+    return result.data.deleteMessage;
   }
   catch (err) {
-    console.log({err});
+    console.error(err);
+
+    if ("Unauthorized" === err.errors[0].errorType) {
+      setAlerts([].concat(alerts, {
+          type: "error",
+          dismissible: true,
+          dismissLabel: "Dismiss message",
+          header: ("Failed to delete the message id: " + messageId),
+          content: err.errors[0].message,
+          id: alerts.length + 1,
+          onDismiss: () => setAlerts(items => items.filter(item => item.id !== alerts.length + 1))
+        })
+      );
+    }
   }
 }
