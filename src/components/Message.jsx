@@ -87,7 +87,11 @@ export const Messages = props => {
           </div>
         </Container>
         <Container>
-          <MessageForm channelId={props.context.channel} />
+          <MessageForm
+            channelId={props.context.channel}
+            alerts={props.alerts}
+            setAlerts={props.setAlerts}
+          />
         </Container>
       </SpaceBetween>
     </Box>
@@ -138,7 +142,9 @@ const Message = ({
       messageVersion={message._version}
       activeMessage={activeMessage}
       setActiveMessage={setActiveMessage}
-     /> : <>
+      alerts={alerts}
+      setAlerts={setAlerts}
+    /> : <>
     <Header
       variant="h5"
       actions={
@@ -191,13 +197,15 @@ const MessageForm = ({
   messageVersion,
   activeMessage,
   setActiveMessage,
+  alerts,
+  setAlerts,
 }) => {
   const [post, setPost] = useState(initText);
 
   const sendMessage = () => {
     if (post.replace(/\s/g, '').length > 0) {
       if (activeMessage && activeMessage.type === "edit") {
-        editMessageApi(messageId, messageVersion, post.trim());
+        editMessageApi(messageId, messageVersion, post.trim(), alerts, setAlerts);
         setActiveMessage(null);
       }
       else {
@@ -255,14 +263,29 @@ function createMessageApi(channelId, post) {
   }
 }
 
-function editMessageApi(messageId, messageVersion, post) {
+async function editMessageApi(messageId, messageVersion, post, alerts, setAlerts) {
   try {
-    API.graphql(graphqlOperation(updateMessage, {
+    const result = await API.graphql(graphqlOperation(updateMessage, {
       input: { id: messageId, content: post, _version: messageVersion }
     }));
+
+    return result.data.editMessage;
   }
   catch (err) {
     console.error(err);
+
+    if ("Unauthorized" === err.errors[0].errorType) {
+      setAlerts([].concat(alerts, {
+          type: "error",
+          dismissible: true,
+          dismissLabel: "Dismiss message",
+          header: ("Failed to edit the message id: " + messageId),
+          content: err.errors[0].message,
+          id: alerts.length + 1,
+          onDismiss: () => setAlerts(items => items.filter(item => item.id !== alerts.length + 1))
+        })
+      );
+    }
   }
 }
 
