@@ -40,7 +40,7 @@ export default function App () {
   ]);
 
   return (
-    <Authenticator loginMechanisms={['email']}>
+    <Authenticator loginMechanisms={['email']} signUpAttributes={['name',]}>
       {({ signOut, user }) => (
         <Box>
           <NavigationBar userInfo={user.attributes} />
