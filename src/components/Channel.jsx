@@ -13,7 +13,7 @@ import {
 
 // components
 import { Messages } from "./Message";
-import { logLastActivity } from './Activity'
+import { logLastActivity, retrieveLastActivity } from './Activity'
 
 // apis
 import { API, graphqlOperation } from 'aws-amplify'
@@ -22,6 +22,19 @@ import { createChannel } from '../graphql/mutations'
 
 export const Channels = props => {
   const [channels] = useAsyncData(() => fetchChannelApi());
+  const [context, setContext] = useState({channel: null});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    retrieveLastActivity(props.userId).then((activity) => {
+      if (loading) {
+        if (activity != null) {
+          setContext(JSON.parse(activity.log));
+        }
+        setLoading(false);
+      }
+    });
+  }, [context, loading]);
 
   return (
     <Box>
@@ -34,15 +47,15 @@ export const Channels = props => {
                 key={channel.id}
                 userId={props.userId}
                 channel={channel}
-                context={props.context}
-                setContext={props.setContext}
+                context={context}
+                setContext={setContext}
               />
             )
           }
         </Container>
         <Messages
-          context={props.context}
-          setContext={props.setContext}
+          context={context}
+          setContext={setContext}
           alerts={props.alerts}
           setAlerts={props.setAlerts}
         />
