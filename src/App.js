@@ -43,7 +43,7 @@ export default function App () {
     <Authenticator loginMechanisms={['email']} signUpAttributes={['name',]}>
       {({ signOut, user }) => (
         <Box>
-          <NavigationBar userInfo={user.attributes} />
+          <NavigationBar signOut={signOut} user={user} />
           <AppLayout
             ref={appLayout}
             headerSelector="#h"

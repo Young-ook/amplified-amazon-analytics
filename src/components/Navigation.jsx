@@ -1,5 +1,4 @@
 import React from "react";
-import { Auth } from 'aws-amplify';
 import {
   SideNavigation,
   TopNavigation
@@ -40,11 +39,11 @@ export const Navigation = props => {
 }
 
 export const NavigationBar = props => {
-  const userInfo = props.userInfo;
+  const userInfo = props.user.attributes;
 
   const itemClickHandler = (event) => {
     if (event.detail.id === "signout") {
-      signOut();
+      props.signOut();
     }
   };
 
@@ -106,15 +105,4 @@ export const NavigationBar = props => {
       }}
     />
   );
-}
-
-// apis
-async function signOut() {
-  try {
-    await Auth.signOut();
-    console.log('signed out');
-  }
-  catch (err) {
-    console.log('error signing out: ', err);
-  }
 }
