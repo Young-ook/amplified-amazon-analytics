@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Container,
   Form,
   Grid,
@@ -40,18 +39,22 @@ export const Channels = props => {
     <Box>
       <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
         <Container>
-          <NewChannelForm />
-          {
-            channels.map(channel =>
-              <Channel
-                key={channel.id}
-                userId={props.userId}
-                channel={channel}
-                context={context}
-                setContext={setContext}
-              />
-            )
-          }
+          <SpaceBetween size="s">
+            <NewChannelForm />
+            <Box>
+            {
+              channels.map(channel =>
+                <Channel
+                  key={channel.id}
+                  userId={props.userId}
+                  channel={channel}
+                  context={context}
+                  setContext={setContext}
+                />
+              )
+            }
+            </Box>
+          </SpaceBetween>
         </Container>
         <Messages
           context={context}
@@ -73,23 +76,26 @@ const NewChannelForm = () => {
       setChannelName("");
     }
   };
+
   const submitHandler = (e) => {
     e.preventDefault();
     createChannel();
+  };
+
+  const keyUpHandler = (e) => {
+    if (e.detail.keyCode === 13 && !e.detail.shiftKey) {
+      createChannel();
+    }
   };
 
   return (
     <form onSubmit={submitHandler}>
     <Form>
       <Input
-        onChange={({ detail }) => setChannelName(detail.value)}
+        onChange={({detail}) => setChannelName(detail.value)}
+        onKeyUp={keyUpHandler}
         value={channelName}
       />
-      <Box>
-        <SpaceBetween direction="horizontal" size="xs">
-          <Button formAction="submit" iconName="add-plus" variant="icon" />
-        </SpaceBetween>
-      </Box>
     </Form>
     </form>
   );
