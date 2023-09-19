@@ -25,8 +25,10 @@ amplify add auth
 
 # create data stores and api server
 amplify add api
- - blank
- - cognito user pool
+> Blank schema
+
+# restore amplify backend api
+git restore amplify/backend/api/chatapp/graphql.schema
 
 # update api schema
 amplify update api
