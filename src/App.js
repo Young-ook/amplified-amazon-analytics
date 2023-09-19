@@ -8,7 +8,7 @@ import {
   Header,
   SpaceBetween
 } from "@cloudscape-design/components";
-import { Authenticator } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
 // components
@@ -16,9 +16,8 @@ import { Navigation, NavigationBar } from "./components/Navigation";
 import { Channels } from "./components/Channel";
 
 // application
-export default function App () {
+function App({ signOut, user }) {
   const appLayout = useRef();
-
   const [alerts, setAlerts] = useState([
     {
       type: "error",
@@ -40,46 +39,44 @@ export default function App () {
   ]);
 
   return (
-    <Authenticator loginMechanisms={['email']} signUpAttributes={['name',]}>
-      {({ signOut, user }) => (
-        <Box>
-          <NavigationBar signOut={signOut} user={user} />
-          <AppLayout
-            ref={appLayout}
-            headerSelector="#h"
-            navigation={<Navigation activeHref="#/distributions" />}
-            content={
-              <ContentLayout
-                header={
-                  <SpaceBetween size="m">
-                    <Header variant="h1" />
-                    <Flashbar
-                      items={alerts}
-                      i18nStrings={{
-                        ariaLabel: "Notifications",
-                        notificationBarAriaLabel: "View all notifications",
-                        notificationBarText: "Notifications",
-                        errorIconAriaLabel: "Error",
-                        warningIconAriaLabel: "Warning",
-                        successIconAriaLabel: "Success",
-                        infoIconAriaLabel: "Info",
-                        inProgressIconAriaLabel: "In progress"
-                      }}
-                      stackItems
-                    />
-                  </SpaceBetween>
-                }
-              >
-                <Channels
-                  userId={user.attributes.sub}
-                  alerts={alerts}
-                  setAlerts={setAlerts}
+    <Box>
+      <NavigationBar signOut={signOut} user={user} />
+      <AppLayout
+        ref={appLayout}
+        headerSelector="#h"
+        navigation={<Navigation activeHref="#/distributions" />}
+        content={
+          <ContentLayout
+            header={
+              <SpaceBetween size="m">
+                <Header variant="h1" />
+                <Flashbar
+                  items={alerts}
+                  i18nStrings={{
+                    ariaLabel: "Notifications",
+                    notificationBarAriaLabel: "View all notifications",
+                    notificationBarText: "Notifications",
+                    errorIconAriaLabel: "Error",
+                    warningIconAriaLabel: "Warning",
+                    successIconAriaLabel: "Success",
+                    infoIconAriaLabel: "Info",
+                    inProgressIconAriaLabel: "In progress"
+                  }}
+                  stackItems
                 />
-              </ContentLayout>
+              </SpaceBetween>
             }
-          />
-        </Box>
-      )}
-    </Authenticator>
+          >
+            <Channels
+              userId={user.attributes.sub}
+              alerts={alerts}
+              setAlerts={setAlerts}
+            />
+          </ContentLayout>
+        }
+      />
+    </Box>
   );
 }
+
+export default withAuthenticator(App);
