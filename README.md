@@ -20,6 +20,8 @@ amplify env checkout dev
 
 # add authentication
 amplify add auth
+> Cognito User Pool
+> Username
 
 # create data stores and api server
 amplify add api
