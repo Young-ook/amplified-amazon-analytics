@@ -33,7 +33,7 @@ export const Channels = props => {
         setLoading(false);
       }
     });
-  }, [context, loading]);
+  }, [context, loading, props.userId]);
 
   return (
     <Box>

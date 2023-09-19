@@ -16,12 +16,16 @@ export const getChannel = /* GraphQL */ `
           createdAt
           updatedAt
           owner
+          __typename
         }
         nextToken
+        __typename
       }
+      groups
       createdAt
       updatedAt
       owner
+      __typename
     }
   }
 `;
@@ -39,12 +43,16 @@ export const listChannels = /* GraphQL */ `
         icon
         messges {
           nextToken
+          __typename
         }
+        groups
         createdAt
         updatedAt
         owner
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -57,6 +65,7 @@ export const getMessage = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      __typename
     }
   }
 `;
@@ -74,8 +83,10 @@ export const listMessages = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -87,6 +98,7 @@ export const getLastActivity = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      __typename
     }
   }
 `;
@@ -111,8 +123,10 @@ export const listLastActivities = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -138,8 +152,10 @@ export const messagesByChannelId = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
