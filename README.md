@@ -1,8 +1,19 @@
-# Chatapp
-Chat application with Amplify and AppSync
+# ChatApp
+Chat application with [Cloudscape](https://cloudscape.design/), AWS Amplify, AWS AppSync, Amazon Cognito, and Amazon DynamoDB
 
+## Getting Started
+### Install React packages
+To run the application, you must install reactstrap and npm dependencies on your workspace.\
+Run npm-install command to download and install packages:
+```
+npm install reactstrap
+```
+You can try to use 'force' options to install packages and dependencies, if you see error.
+```
+npm install reactstrap --force
+```
 
-## Install Amplify CLI
+### Install Amplify CLI
 https://docs.amplify.aws/cli/start/install/
 
 ```
