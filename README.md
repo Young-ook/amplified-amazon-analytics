@@ -1,5 +1,6 @@
 # ChatApp
 Chat application with [Cloudscape](https://cloudscape.design/), AWS Amplify, AWS AppSync, Amazon Cognito, and Amazon DynamoDB
+![chatapp-cloudscape-amplify](chatapp-cloudscape-amplify.png)
 
 ## Getting Started
 ### Clone repo
