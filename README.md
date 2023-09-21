@@ -2,6 +2,16 @@
 Chat application with [Cloudscape](https://cloudscape.design/), AWS Amplify, AWS AppSync, Amazon Cognito, and Amazon DynamoDB
 
 ## Getting Started
+### Clone repo
+Download exmaple:
+```
+git clone git@github.com:Young-ook/chatapp.git
+```
+And change directory to the project source
+```
+cd chatapp
+```
+
 ### Install React packages
 To run the application, you must install reactstrap and npm dependencies on your workspace.\
 Run npm-install command to download and install packages:
