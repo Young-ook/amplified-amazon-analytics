@@ -25,36 +25,50 @@ npm install reactstrap --force
 ```
 
 ### Install Amplify CLI
-https://docs.amplify.aws/cli/start/install/
+The Amplify command-iine interface (CLI) is a unified toolchain to create AWS cloud services for your app. To install the amplify-cli on your workspace, vist the [developer guide](https://docs.amplify.aws/cli/start/install/) and follow the instructions.
 
+**macOS**
 ```
-# install amplify-cli
 brew install node
 npm install -g @aws-amplify/cli
+```
 
+### Initialize an Amplify application
+You can start to build an application from scratch using amplify-cli `init` command.\
+Run command:
+```
 # create a new amplify react project
 amplify init
-
+```
+(Optianal),
+```
 # create amplify environment
 amplify env list
 amplify env add dev
 amplify env checkout dev
-
-# add authentication
+```
+### Create Cognito Authn/z
+```
 amplify add auth
 > Cognito User Pool
 > Username
+```
 
-# create data stores and api server
+### Create AppSync APIs
+```
 amplify add api
 > Blank schema
-
-# restore amplify backend api
-git restore amplify/backend/api/chatapp/graphql.schema
-
+```
+```
+cp src/graphql/schema.graphql amplify/backend/api/chatapp/graphql.schema
+```
+```
 # update api schema
 amplify update api
+```
 
+### Apply changes
+```
 # apply changes to aws
 amplify push
 ```
