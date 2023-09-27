@@ -14,10 +14,12 @@ import '@aws-amplify/ui-react/styles.css';
 // components
 import { Navigation, NavigationBar } from "./components/Navigation";
 import { Channels } from "./components/Channel";
+import { Admin } from "./components/Admin";
 
 // application
 function App({ signOut, user }) {
   const appLayout = useRef();
+  const [activeHref, setActiveHref] = React.useState("#/distributions");
   const [alerts, setAlerts] = useState([
     {
       type: "error",
@@ -44,7 +46,7 @@ function App({ signOut, user }) {
       <AppLayout
         ref={appLayout}
         headerSelector="#h"
-        navigation={<Navigation activeHref="#/distributions" />}
+        navigation={<Navigation activeHref={activeHref} />}
         content={
           <ContentLayout
             header={
@@ -67,11 +69,12 @@ function App({ signOut, user }) {
               </SpaceBetween>
             }
           >
-            <Channels
-              userId={user.attributes.sub}
-              alerts={alerts}
-              setAlerts={setAlerts}
-            />
+            {
+              {
+                "#/distributions" : <Channels userId={user.attributes.sub} alerts={alerts} setAlerts={setAlerts} />,
+                "#/admin" : <Admin />,
+              }[activeHref]
+            }
           </ContentLayout>
         }
       />
