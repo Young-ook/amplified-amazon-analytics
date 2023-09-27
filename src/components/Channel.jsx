@@ -15,12 +15,14 @@ import { Messages } from "./Message";
 import { logLastActivity, retrieveLastActivity } from './Activity'
 
 // apis
+import { useAsyncData } from './DataProvider'
 import { API, graphqlOperation } from 'aws-amplify'
 import { listChannels } from '../graphql/queries'
 import { createChannel } from '../graphql/mutations'
+import { onCreateChannel } from '../graphql/subscriptions';
 
 export const Channels = props => {
-  const [channels] = useAsyncData(() => fetchChannelApi());
+  const [channels, setChannels] = useAsyncData(() => fetchChannelApi());
   const [context, setContext] = useState({channel: null});
   const [loading, setLoading] = useState(true);
 
@@ -33,7 +35,15 @@ export const Channels = props => {
         setLoading(false);
       }
     });
-  }, [context, loading, props.userId]);
+
+    const createSub = API.graphql(graphqlOperation(onCreateChannel)).subscribe({
+      next: ({value}) => {setChannels((channels) => [...channels, value.data.onCreateChannel])}
+    });
+
+    return () => {
+      createSub.unsubscribe()
+    }
+  }, []);
 
   return (
     <Box>
@@ -122,19 +132,6 @@ const Channel = ({
       <Link onFollow={switchChannelHandler}>{channel.name}</Link>
     </Box>
   );
-}
-
-function useAsyncData(loadItems) {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    loadItems().then(items => {
-      setItems(items);
-    });
-    return () => {};
-  }, [loadItems]);
-
-  return [items];
 }
 
 // graphql apis
