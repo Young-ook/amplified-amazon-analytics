@@ -1,28 +1,95 @@
 // ui
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Alert,
-  Box,
-  Button,
-  Container,
-  Form,
-  Header,
-  Link,
-  Modal,
-  SpaceBetween,
-  Textarea
+  Alert, Button, Box, Container, Form,
+  Grid, Header, Link, Modal,
+  SpaceBetween, Textarea
 } from "@cloudscape-design/components";
-
-//apis
-import { API, graphqlOperation } from 'aws-amplify'
-import { listMessages } from '../graphql/queries'
-import { createMessage, updateMessage, deleteMessage } from '../graphql/mutations'
-import { onCreateMessage, onUpdateMessage, onDeleteMessage } from '../graphql/subscriptions';
 
 // utils
 import moment from "moment";
 
-export const Messages = props => {
+// components
+import { logLastActivity, retrieveLastActivity } from './Activity'
+
+// apis
+import { useAsyncData } from './DataProvider'
+import { API, graphqlOperation } from 'aws-amplify'
+import { listChannels, listMessages } from '../graphql/queries'
+import { createMessage, updateMessage, deleteMessage } from '../graphql/mutations'
+import { onCreateMessage, onUpdateMessage, onDeleteMessage } from '../graphql/subscriptions';
+
+export const Chat = props => {
+  const [channels, setChannels] = useAsyncData(() => fetchChannelApi());
+  const [context, setContext] = useState({channel: null});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    retrieveLastActivity(props.userId).then((activity) => {
+      if (loading) {
+        if (activity != null) {
+          setContext(JSON.parse(activity.log));
+        }
+        setLoading(false);
+      }
+    });
+  }, []);
+
+  return (
+    <Box>
+      <Grid gridDefinition={[{ colspan: 3 }, { colspan: 9 }]}>
+        <Container>
+          <SpaceBetween size="s">
+            <Box>
+            {
+              channels.map(channel =>
+                <Channel
+                  key={channel.id}
+                  userId={props.userId}
+                  channel={channel}
+                  context={context}
+                  setContext={setContext}
+                />
+              )
+            }
+            </Box>
+          </SpaceBetween>
+        </Container>
+        <Messages
+          context={context}
+          setContext={setContext}
+          alerts={props.alerts}
+          setAlerts={props.setAlerts}
+        />
+      </Grid>
+    </Box>
+  );
+}
+
+const Channel = ({
+  userId,
+  channel,
+  context,
+  setContext,
+}) => {
+  if (!context.channel || context.channel == null) {
+    setContext({...context, ...{channel: channel.id}});
+  }
+
+  const switchChannelHandler = () => {
+    const updateContext = {...context, ...{channel: channel.id}};
+    setContext(updateContext);
+    logLastActivity(userId, updateContext);
+  }
+
+  return (
+    <Box>
+      <Link onFollow={switchChannelHandler}>{channel.name}</Link>
+    </Box>
+  );
+}
+
+const Messages = props => {
   const [activeMessage, setActiveMessage] = useState(null);
   const [messages, setMessages] = useState([]);
 
@@ -252,6 +319,18 @@ const MessageForm = ({
 }
 
 // graphql apis
+function fetchChannelApi() {
+  try {
+    return API.graphql(graphqlOperation(listChannels)).then(
+      result => {
+        return result.data.listChannels.items;
+    });
+  }
+  catch (err) {
+    console.log({err});
+  }
+}
+
 function createMessageApi(channelId, post) {
   try {
     API.graphql(graphqlOperation(createMessage, {
