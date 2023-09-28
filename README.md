@@ -1,5 +1,6 @@
 # ChatApp
-Chat application with [Cloudscape](https://cloudscape.design/), AWS Amplify, AWS AppSync, Amazon Cognito, and Amazon DynamoDB
+This is an chat application example shows how to build rapidly a react web app with [Cloudscape](https://cloudscape.design/) and AWS Amplify and AWS serverless services, such as AWS Cognito, AWS AppSync, Amazon DynamoDB.
+
 ![chatapp-cloudscape-amplify](chatapp-cloudscape-amplify.png)
 
 ## Getting Started
@@ -51,25 +52,29 @@ amplify env checkout dev
 ```
 amplify add auth
 > Cognito User Pool
+> Default configuration
 > Username
 ```
 
 ### Create AppSync APIs
 ```
 amplify add api
-> Blank schema
+> Change the auth mode config to Cognito User Pool
+> Blank Schema
 ```
+[Important] You must replace the auto-generated graphql.schema file by amplify-cli in the previous step with pre-defined model schema to run this example porperly.
+Copy the graphql.scheam file under the src/graphql directory in your project directory, cloned local repository.
 ```
 cp src/graphql/schema.graphql amplify/backend/api/chatapp/graphql.schema
 ```
+Then, update the api configuration using amplify-cli. You can see an update on your local server configuration. 
 ```
-# update api schema
 amplify update api
 ```
 
 ### Apply changes
+And apply changes on your AWS environment. Thia step will create your backend infrastructure on your AWS account such as Amazon Cognito (Auth), AWS AppSync (API), and Amazon DynamoDB (Database).
 ```
-# apply changes to aws
 amplify push
 ```
 
