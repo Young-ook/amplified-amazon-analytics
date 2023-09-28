@@ -13,7 +13,7 @@ import '@aws-amplify/ui-react/styles.css';
 
 // components
 import { Navigation, NavigationBar } from "./components/Navigation";
-import { Channels } from "./components/Channel";
+import { Channels } from "./components/Chat";
 import { Admin } from "./components/Admin";
 
 // application
