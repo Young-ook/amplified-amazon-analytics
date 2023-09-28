@@ -13,7 +13,7 @@ import '@aws-amplify/ui-react/styles.css';
 
 // components
 import { Navigation, NavigationBar } from "./components/Navigation";
-import { Channels } from "./components/Chat";
+import { Chat } from "./components/Chat";
 import { Admin } from "./components/Admin";
 
 // application
@@ -71,7 +71,7 @@ function App({ signOut, user }) {
           >
             {
               {
-                "#/chat" : <Channels userId={user.attributes.sub} alerts={alerts} setAlerts={setAlerts} />,
+                "#/chat" : <Chat userId={user.attributes.sub} alerts={alerts} setAlerts={setAlerts} />,
                 "#/admin" : <Admin />,
               }[activeHref]
             }

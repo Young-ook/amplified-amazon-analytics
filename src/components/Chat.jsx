@@ -19,7 +19,7 @@ import { listChannels, listMessages } from '../graphql/queries'
 import { createMessage, updateMessage, deleteMessage } from '../graphql/mutations'
 import { onCreateMessage, onUpdateMessage, onDeleteMessage } from '../graphql/subscriptions';
 
-export const Channels = props => {
+export const Chat = props => {
   const [channels, setChannels] = useAsyncData(() => fetchChannelApi());
   const [context, setContext] = useState({channel: null});
   const [loading, setLoading] = useState(true);
