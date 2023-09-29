@@ -38,12 +38,10 @@ npm install -g @aws-amplify/cli
 You can start to build an application from scratch using amplify-cli `init` command.\
 Run command:
 ```
-# create a new amplify react project
 amplify init
 ```
-(Optianal),
+(Optional),Create amplify environment.
 ```
-# create amplify environment
 amplify env list
 amplify env add dev
 amplify env checkout dev
