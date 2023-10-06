@@ -42,19 +42,17 @@ npm install -g @aws-amplify/cli
 You can start to build an application from scratch using amplify-cli `init` command.\
 Run command:
 ```
-# create a new amplify react project
 amplify init
 ```
 (Optianal),
 ```
-# create amplify environment
 amplify env list
 amplify env add dev
 amplify env checkout dev
 ```
 ### Add an Identity and Access Management service
 ```
-amplify add auth
+amplify auth add
 > Cognito User Pool
 > Default configuration
 > Username
@@ -62,7 +60,7 @@ amplify add auth
 
 ### Add a GraphQL API service
 ```
-amplify add api
+amplify api add
 > Change the auth mode config to Cognito User Pool
 > Blank Schema
 ```
@@ -73,7 +71,7 @@ cp src/graphql/schema.graphql amplify/backend/api/chatapp/graphql.schema
 ```
 Then, update the api configuration using amplify-cli. You can see an update on your local server configuration. 
 ```
-amplify update api
+amplify api update
 ```
 
 ### Add Analytics platform
