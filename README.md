@@ -1,7 +1,11 @@
 # ChatApp
 This is an chat application example shows how to build rapidly a react web app with [Cloudscape](https://cloudscape.design/) and AWS Amplify and AWS serverless services, such as AWS Cognito, AWS AppSync, Amazon DynamoDB.
 
-![chatapp-cloudscape-amplify](chatapp-cloudscape-amplify.png)
+**Application**\
+![chatapp-cloudscape-amplify](res/chatapp-cloudscape-amplify.png)
+
+**Analytics Dashboard**\
+![aws-pp-client-platform](res/aws-pp-client-platform.png)
 
 ## Getting Started
 ### Clone repo
