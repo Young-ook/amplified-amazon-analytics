@@ -48,7 +48,7 @@ amplify env list
 amplify env add dev
 amplify env checkout dev
 ```
-### Create Cognito Authn/z
+### Add an Identity and Access Management service
 ```
 amplify add auth
 > Cognito User Pool
@@ -56,7 +56,7 @@ amplify add auth
 > Username
 ```
 
-### Create AppSync APIs
+### Add a GraphQL API service
 ```
 amplify add api
 > Change the auth mode config to Cognito User Pool
@@ -70,6 +70,12 @@ cp src/graphql/schema.graphql amplify/backend/api/chatapp/graphql.schema
 Then, update the api configuration using amplify-cli. You can see an update on your local server configuration. 
 ```
 amplify update api
+```
+
+### Add Analytics platform
+```
+amplify add analytics
+> Amazon Pinpoint
 ```
 
 ### Apply changes
