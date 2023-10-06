@@ -7,24 +7,25 @@ import App from "./App";
 import  config  from "./aws-exports";
 Amplify.configure(config);
 
-const root = createRoot(document.getElementById('root'));
-root.render(<App />);
-
+// analytics auto-tracker
 Analytics.autoTrack('session', {
-    enable: true,
-    attributes: {
-        attr: 'attr'
-    },
+	enable: true,
+	immediate: true
 });
 
 Analytics.autoTrack('pageView', {
-    // REQUIRED, turn on/off the auto tracking
-    enable: true,
-    eventName: 'pageView',
-    // OPTIONAL, by default is 'multiPageApp'
-    // you need to change it to 'SPA' if your app is a single-page app like React
-    type: 'SPA',
-    getUrl: () => {
-        return window.location.origin + window.location.pathname;
-    }
+  // REQUIRED, turn on/off the auto tracking
+  enable: true,
+  // OPTIONAL, by default is 'multiPageApp'
+  // you need to change it to 'SPA' if your app is a single-page app like React
+  type: 'SPA',
+  immediate: true
 });
+
+Analytics.autoTrack('event', {
+  enable: true,
+  immediate: true
+});
+
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
