@@ -6,6 +6,7 @@ This is an chat application example shows how to build rapidly a react web app w
 
 **Analytics Dashboard**\
 ![aws-pp-client-platform](res/aws-pp-client-platform.png)
+![aws-pp-mau](res/aws-pp-mau.png)
 
 ## Getting Started
 ### Clone repo
