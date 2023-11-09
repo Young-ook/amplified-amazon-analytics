@@ -14,7 +14,7 @@ import { logLastActivity, retrieveLastActivity } from './Activity'
 
 // apis
 import { useAsyncData } from './DataProvider'
-import { API, graphqlOperation } from 'aws-amplify'
+import { Analytics, API, graphqlOperation } from 'aws-amplify'
 import { listChannels, listMessages } from '../graphql/queries'
 import { createMessage, updateMessage, deleteMessage } from '../graphql/mutations'
 import { onCreateMessage, onUpdateMessage, onDeleteMessage } from '../graphql/subscriptions';
@@ -333,6 +333,14 @@ function fetchChannelApi() {
 
 function createMessageApi(channelId, post) {
   try {
+    // record a custom event
+    Analytics.record({
+      name: 'albumVisit',
+      attributes: { genre: 'Pop', artist: 'BTS' },
+      metrics: { minutesListened: 30 }
+    });
+
+    // post a message
     API.graphql(graphqlOperation(createMessage, {
       input: { content: post, channelId: channelId }
     }));
