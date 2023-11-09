@@ -87,6 +87,12 @@ And apply changes on your AWS environment. Thia step will create your backend in
 amplify push
 ```
 
+### Open Analytics Dashboard
+Once we have created the resources, we can run this command to open the Amazon Pinpoint console. Initially, all charts should be empty:
+```
+amplify console analytics
+```
+
 ## Additional Resources
 - [Amplify CLI enables creating Amazon Cognito User Pool Groups, configuring fine-grained permissions on groups, and adding user management capabilities to applications](https://aws.amazon.com/ko/blogs/mobile/amplify-cli-enables-creating-amazon-cognito-user-pool-groups-configuring-fine-grained-permissions-on-groups-and-adding-user-management-capabilities-to-applications/)
 - [Amplify UI Troubleshooting](https://ui.docs.amplify.aws/react/getting-started/troubleshooting)
