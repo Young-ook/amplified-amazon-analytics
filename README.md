@@ -17,11 +17,11 @@ ChatApp is a sample application to show how A3 works for digital marketing platf
 ### Clone repo
 Download exmaple:
 ```
-git clone git@github.com:Young-ook/chatapp.git
+git clone git@github.com:Young-ook/amplified-amazon-analytics.git
 ```
 And change directory to the project source
 ```
-cd chatapp
+cd amplified-amazon-analytics
 ```
 
 ### Install React packages
