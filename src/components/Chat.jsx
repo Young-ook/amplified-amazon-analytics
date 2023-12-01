@@ -340,6 +340,19 @@ function createMessageApi(channelId, post) {
       metrics: { minutesListened: 30 }
     });
 
+    // record a modetization event
+    Analytics.record({
+      name: '_monetization.purchase',
+      attributes: {
+        _currency: 'USD',
+        _product_id: 'XYZ',
+      },
+      metrics: {
+        _item_price: 12.0,
+        _quantity: 1.0,
+      }
+    });
+
     // post a message
     API.graphql(graphqlOperation(createMessage, {
       input: { content: post, channelId: channelId }
