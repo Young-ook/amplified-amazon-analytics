@@ -12,6 +12,7 @@ ChatApp is a sample application to show how A3 works for digital marketing platf
 **Analytics Dashboard**\
 ![aws-pp-client-platform](res/aws-pp-client-platform.png)
 ![aws-pp-mau](res/aws-pp-mau.png)
+![aws-pp-revenue](res/aws-pp-revenue.png)
 
 ## Getting Started
 ### Clone repo
