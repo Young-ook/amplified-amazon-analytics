@@ -105,3 +105,4 @@ amplify console analytics
 - [Amplify Analytics Automatic tracking](https://docs.amplify.aws/lib/analytics/autotrack/q/platform/js/)
 - [AWS Messaging and Targeting](https://aws.amazon.com/blogs/messaging-and-targeting/)
 - [Understanding the Different Ways to Invoke Lambda Functions](https://aws.amazon.com/blogs/architecture/understanding-the-different-ways-to-invoke-lambda-functions/)
+- [Simplify access to multiple microservices with AWS AppSync and AWS Amplify](https://aws.amazon.com/blogs/mobile/appsync-microservices/)
